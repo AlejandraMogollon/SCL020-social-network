@@ -1,5 +1,10 @@
-{/* <section>
-    <main class="signup">
+import { onNavigate } from "../router/router.js";
+
+const signUp = () =>{
+
+  const templateSignUp =  `
+ <section>
+    <main class="main-signup">
       <div class="logo">
         <img src="img/logo-Mediary.png" alt="logo-mediary">
       </div>
@@ -7,8 +12,20 @@
       <div class="user-input">
         <input class="email" type="text" value="" placeholder="email ">
         <input class="password" type="text" value="" placeholder="password ">
-        <button class="log-in">Sign Up</button>
+        <button class="button-signup">Sign Up</button>
         <a href="">Already have an account?</a>
       </div> 
     </main>
-  </section> */}
+  </section> `
+
+   const signUpContainer = document.createElement('div');
+   signUpContainer.innerHTML = templateSignUp;
+    
+  //  const buttonSignUp = signUpContainer.querySelector('.button-signup');
+   
+  
+
+  return signUpContainer
+}
+
+export default signUp 
