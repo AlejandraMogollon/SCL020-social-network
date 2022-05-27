@@ -1,10 +1,8 @@
-// Este es el punto de entrada de tu aplicacion
-//import router 
+import  {onNavigate}  from '../router/router.js';
+
+onNavigate('/');
 
 
-import { myFunction } from './lib/index.js';
-
-myFunction();
 
 
 

@@ -1,6 +1,28 @@
-//importar carpeta templates 
+import login from '../templates/login.js'
+import feed from '../templates/feed.js'
+import signUp from '../templates/signup.js'
 
-// manejar vistas
-//home - feed - sign up
 
-//exportar -> index o main 
+const routes = 
+    {
+        // path: '/'
+        // template:home()
+        '/': login(),
+        '/feed':feed(),
+        '/signup':signUp()
+    }
+
+const onNavigate = (pathname) => {
+    let rootDiv = document.getElementById("root");
+
+    window.history.pushState({},pathname,window.location.origin+pathname);
+    rootDiv.innerHTML= null;
+    rootDiv.appendChild(routes[pathname])  ;
+}
+
+
+export  {onNavigate}
+
+
+
+

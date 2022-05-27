@@ -1,4 +1,7 @@
-{/* <header>
+import { onNavigate } from "../router/router.js";
+
+const feed = ()=>{
+    const templateFeed = ` <header>
     <nav>
       <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
@@ -36,4 +39,17 @@
         </div>
       </div>
     </main>
-  </section> */}
+  </section> `;
+  
+  const feedContainer = document.createElement('div');
+    feedContainer.innerHTML = templateFeed;
+    // const login = feedContainer.querySelector('.log-in');
+    // login.addEventListener('click',()=>{
+    //     onNavigate('/feed')
+    //     console.log('click login')
+    // })
+
+  return feedContainer
+    }
+
+export default feed
