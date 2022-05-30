@@ -1,8 +1,3 @@
-import  {onNavigate}  from '../router/router.js';
+import { onNavigate } from '../router/router.js';
 
-onNavigate('/');
-
-
-
-
-
+onNavigate(window.location.pathname);

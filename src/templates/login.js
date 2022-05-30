@@ -1,7 +1,7 @@
-import { onNavigate } from "../router/router.js";
-import signUp from '../templates/signup.js'
-const login = ()=>{
-    const templateLogin = `
+import { onNavigate } from '../router/router.js';
+import signUp from '../templates/signup.js';
+const login = () => {
+  const templateLogin = `
         <section>
             <main class="home">
             <div class="logo">
@@ -21,18 +21,23 @@ const login = ()=>{
                 <p> Don't have an account?  <button class="btnSignUp" id="btnSignUp"  >Sign Up here</button></p>
             </div>      
             </main>
-        </section> `
+        </section> `;
 
-    const loginContainer = document.createElement('div');
-    loginContainer.innerHTML = templateLogin;
-    const login = loginContainer.querySelector('.log-in');
-    login.addEventListener('click',()=>{
-        onNavigate('/feed')
-        console.log('click login')
-    })
+  const loginContainer = document.createElement('div');
+  loginContainer.innerHTML = templateLogin;
+  const login = loginContainer.querySelector('.log-in');
+  login.addEventListener('click', () => {
+    onNavigate('/feed');
+    console.log('click login lleva a feed');
+  });
 
-  
-    return loginContainer
-    }
+  const signUpBtn = loginContainer.querySelector('.btnSignUp');
+  signUpBtn.addEventListener('click', () => {
+    onNavigate('/signup');
+    console.log('click signup lleva a la pag signup');
+  });
 
-export default login
+  return loginContainer;
+};
+
+export default login;
