@@ -3,6 +3,6 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase
 import config from './config.js';
 
 // Initialize Firebase
-initializeApp(config);
+const app = initializeApp(config);
 
-export { initializeApp };
+export { initializeApp, app };

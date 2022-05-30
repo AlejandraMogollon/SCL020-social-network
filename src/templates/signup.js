@@ -1,8 +1,14 @@
-import { onNavigate } from "../router/router.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+import { onNavigate } from '../router/router.js';
+import { app } from '../firebase/init.js';
+import { validateEmail, validatePss } from '../utility.js';
 
-const signUp = () =>{
-
-  const templateSignUp =  `
+const signUp = () => {
+  const templateSignUp = `
  <section>
     <main class="main-signup">
       <div class="logo">
@@ -16,16 +22,38 @@ const signUp = () =>{
         <a href="">Already have an account?</a>
       </div> 
     </main>
-  </section> `
+  </section> `;
 
-   const signUpContainer = document.createElement('div');
-   signUpContainer.innerHTML = templateSignUp;
-    
-  //  const buttonSignUp = signUpContainer.querySelector('.button-signup');
-   
-  
+  const signUpContainer = document.createElement('div');
+  signUpContainer.innerHTML = templateSignUp;
 
-  return signUpContainer
-}
+  const buttonSignUp = signUpContainer.querySelector('.button-signup');
+  buttonSignUp.addEventListener('click', () => {
+    const auth = getAuth(app);
 
-export default signUp 
+    const email = signUpContainer.querySelector('.email').value;
+    const password = signUpContainer.querySelector('.password').value;
+    if (validateEmail(email) && validatePss(password)) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ...
+          onNavigate('/feed');
+          console.log('Create user!!');
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('erroooorr');
+          // ..
+        });
+    } else {
+      console.log('no cree nada');
+    }
+  });
+
+  return signUpContainer;
+};
+
+export default signUp;
