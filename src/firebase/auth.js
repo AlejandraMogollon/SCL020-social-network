@@ -1,6 +1,6 @@
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
 
-const auth = getAuth();
+
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in
@@ -12,7 +12,6 @@ createUserWithEmailAndPassword(auth, email, password)
     const errorMessage = error.message;
     // ..
   });
-
 
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
@@ -26,14 +25,6 @@ createUserWithEmailAndPassword(auth, email, password)
   });
 
  
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
-    // ...
-  } else {
-    // User is signed out
-    // ...
-  }
-});
+
+
+

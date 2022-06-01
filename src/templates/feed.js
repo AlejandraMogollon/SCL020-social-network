@@ -1,4 +1,7 @@
 import { onNavigate } from "../router/router.js";
+import {auth} from "../firebase/init.js"
+import {signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá! 
+
 
 const feed = ()=>{
     const templateFeed = ` <header>
@@ -38,16 +41,26 @@ const feed = ()=>{
           </div>
         </div>
       </div>
+      <button class="btnLogOut"> Log out</button>
     </main>
   </section> `;
-  
+//TEMPLATE FEED A FEEDCONTAINER (DIV)  
   const feedContainer = document.createElement('div');
-    feedContainer.innerHTML = templateFeed;
-    // const login = feedContainer.querySelector('.log-in');
-    // login.addEventListener('click',()=>{
-    //     onNavigate('/feed')
-    //     console.log('click login')
-    // })
+  feedContainer.innerHTML = templateFeed;
+//BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)  
+  const btnLogOut  = feedContainer.querySelector('.btnLogOut')
+  btnLogOut.addEventListener('click', ()=>{
+    
+    signOut(auth).then(() => {
+      console.log('Sign-out successful.')
+      // onNavigate('/login')
+    }).catch((error) => {
+      console.log(error, 'An error happened.')
+    });
+    console.log('btnLogout Clicked')
+   
+  })
+//BOTON POST
 
   return feedContainer
     }
