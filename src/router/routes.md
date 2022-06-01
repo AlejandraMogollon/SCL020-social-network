@@ -1,5 +1,3 @@
-import { template } from '@babel/core';
-
 const paths = {
   home: {
     path: '/',

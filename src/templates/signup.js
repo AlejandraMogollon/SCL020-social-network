@@ -1,10 +1,9 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
 import { onNavigate } from '../router/router.js';
-import { app } from '../firebase/init.js';
+import { auth } from '../firebase/init.js';
 import { validateEmail, validatePss } from '../utility.js';
 
 const signUp = () => {
@@ -24,15 +23,15 @@ const signUp = () => {
     </main>
   </section> `;
 
+//TEMPLATE SIGNUP A SIGNUPCONTAINER (DIV)
   const signUpContainer = document.createElement('div');
   signUpContainer.innerHTML = templateSignUp;
-
+//BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
   const buttonSignUp = signUpContainer.querySelector('.button-signup');
   buttonSignUp.addEventListener('click', () => {
-    const auth = getAuth(app);
-
+    
     const email = signUpContainer.querySelector('.email').value;
-    const password = signUpContainer.querySelector('.password').value;
+    const password = signUpContainer.querySelector('.password').value;  
     if (validateEmail(email) && validatePss(password)) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -40,7 +39,7 @@ const signUp = () => {
           const user = userCredential.user;
           // ...
           onNavigate('/feed');
-          console.log('Create user!!');
+          console.log(`this is the uid created user: ${user.uid}`);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -52,7 +51,7 @@ const signUp = () => {
       console.log('no cree nada');
     }
   });
-
+//ALREADYACCOUNT -ONCLICK => ??;
   return signUpContainer;
 };
 
