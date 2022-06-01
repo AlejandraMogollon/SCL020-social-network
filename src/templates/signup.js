@@ -1,9 +1,5 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+import { createUser } from '../firebase/auth.js';
 import { onNavigate } from '../router/router.js';
-import { auth } from '../firebase/init.js';
 import { validateEmail, validatePss } from '../utility.js';
 
 const signUp = () => {
@@ -23,35 +19,25 @@ const signUp = () => {
     </main>
   </section> `;
 
-//TEMPLATE SIGNUP A SIGNUPCONTAINER (DIV)
+  //TEMPLATE SIGNUP A SIGNUPCONTAINER (DIV)
   const signUpContainer = document.createElement('div');
   signUpContainer.innerHTML = templateSignUp;
-//BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
+  //BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
   const buttonSignUp = signUpContainer.querySelector('.button-signup');
-  buttonSignUp.addEventListener('click', () => {
-    
+  buttonSignUp.addEventListener('click', async () => {
     const email = signUpContainer.querySelector('.email').value;
-    const password = signUpContainer.querySelector('.password').value;  
+    const password = signUpContainer.querySelector('.password').value;
+
     if (validateEmail(email) && validatePss(password)) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          // ...
-          onNavigate('/feed');
-          console.log(`this is the uid created user: ${user.uid}`);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log('erroooorr');
-          // ..
-        });
+      const fbResponse = await createUser(email, password);
+      console.log('este es el user log', fbResponse.user.uid);
+      onNavigate('/feed');
+      // console.log(`this is the uid created user: ${user.uid}`);
     } else {
       console.log('no cree nada');
     }
   });
-//ALREADYACCOUNT -ONCLICK => ??;
+  //ALREADYACCOUNT -ONCLICK => ??;
   return signUpContainer;
 };
 
