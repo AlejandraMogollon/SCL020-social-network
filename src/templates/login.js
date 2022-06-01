@@ -1,6 +1,12 @@
 import { onNavigate } from '../router/router.js';
-import {auth,provider} from '../firebase/init.js';
-import {signInWithEmailAndPassword,GoogleAuthProvider,signInWithRedirect,getRedirectResult} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+// import { auth, provider } from '../firebase/init.js';
+// import {
+//   signInWithEmailAndPassword,
+//   GoogleAuthProvider,
+//   signInWithRedirect,
+//   getRedirectResult,
+// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+import { userLogIn } from '../firebase/auth.js';
 const login = () => {
   const templateLogin = `
         <section>
@@ -24,72 +30,73 @@ const login = () => {
             </main>
         </section> `;
 
-//= TEMPLATE LOGIN A LOGINCONTAINER (DIV) =// 
-const loginContainer = document.createElement('div');
-loginContainer.innerHTML = templateLogin;
-//======== BOTON LOGIN - ONCLICK => SYNC - SIGNINMAILPSS (FIREBASE) -> ONNAVIGATE(FEED)
-const login = loginContainer.querySelector('.log-in');
-const mail = loginContainer.querySelector('.email').value;
-const pass = loginContainer.querySelector('.password').value;
+  //= TEMPLATE LOGIN A LOGINCONTAINER (DIV) =//
+  const loginContainer = document.createElement('div');
+  loginContainer.innerHTML = templateLogin;
+  //======== BOTON LOGIN - ONCLICK => SYNC - SIGNINMAILPSS (FIREBASE) -> ONNAVIGATE(FEED)
+  const login = loginContainer.querySelector('.log-in');
+  const email = loginContainer.querySelector('.email').value;
+  const password = loginContainer.querySelector('.password').value;
 
-login.addEventListener('click', () => {
-  console.log(mail)
-  signInWithEmailAndPassword(auth, mail, pass)
-    .then((userCredential) => {
-    console.log("signed in")
-    const user = userCredential.user;
-    // ...
-    })
-  .catch((error) => {
-    console.log(`error: ${error}`)
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    //["invalid-email" /* INVALID_EMAIL */]: 'The email address is badly formatted.',
-  });
+  login.addEventListener('click', async () => {
+    console.log(email);
+    const userLoged = await userLogIn(email, password);
+    console.log('aqui es el userlog:', userLoged);
+    onNavigate('/feed');
+    console.log('click login lleva a feed');
+
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((userCredential) => {
+    //     console.log('signed in');
+    //     const user = userCredential.user;
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     console.log(`error: ${error}`);
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     //["invalid-email" /* INVALID_EMAIL */]: 'The email address is badly formatted.',
+    //   });
     // onNavigate('/feed');
     // console.log('click login lleva a feed');
   });
 
-  //========FORGOT PASSWORD??'PASSWORD_RESET' ========// 
+  //========FORGOT PASSWORD??'PASSWORD_RESET' ========//
 
+  //========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======
+  const signInGoogle = loginContainer.querySelector('.sign-in-google');
+  signInGoogle.addEventListener('click', () => {
+    //signInWithRedirect(auth, provider);//retorna una promesa
+    console.log('boton google');
+    onNavigate('/feed');
+  });
 
-//========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======
-const signInGoogle = loginContainer.querySelector('.sign-in-google');
-signInGoogle.addEventListener('click', ()=>{
-//signInWithRedirect(auth, provider);//retorna una promesa
-  console.log('boton google')
-  // onNavigate('/feed');
-}) 
-
-//======== BOTON SIGN UP - ONCLICK => ONNAVIGATE(SIGNUP)//======== 
+  //======== BOTON SIGN UP - ONCLICK => ONNAVIGATE(SIGNUP)//========
   const signUpBtn = loginContainer.querySelector('.btnSignUp');
   signUpBtn.addEventListener('click', () => {
-    // onNavigate('/signup');
+    onNavigate('/signup');
     console.log('click signup lleva a la pag signup');
   });
 
+  // getRedirectResult(auth)
+  //   .then((result) => {
+  //     // This gives you a Google Access Token. You can use it to access Google APIs.
+  //     console.log(getRedirectResult(auth), new Date)
+  //     const credential = GoogleAuthProvider.credentialFromResult(result);
+  //     const token = credential.accessToken;
 
-
-// getRedirectResult(auth)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access Google APIs.
-//     console.log(getRedirectResult(auth), new Date)
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-
-//     // The signed-in user info.
-//     const user = result.user;
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//     // ...
-//   });
-
+  //     // The signed-in user info.
+  //     const user = result.user;
+  //   }).catch((error) => {
+  //     // Handle Errors here.
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     // The email of the user's account used.
+  //     const email = error.email;
+  //     // The AuthCredential type that was used.
+  //     const credential = GoogleAuthProvider.credentialFromError(error);
+  //     // ...
+  //   });
 
   return loginContainer;
 };
