@@ -1,10 +1,11 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  getAuth,
+  getAuth,GoogleAuthProvider,getRedirectResult,
   signOut,
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
 import { auth } from '../firebase/init.js';
+
 
 export const createUser = async (email, password) => {
   try {
@@ -21,17 +22,6 @@ export const createUser = async (email, password) => {
   }
 };
 
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // ..
-//   });
 
 export const userLogIn = async (email, password) => {
   try {
@@ -44,13 +34,4 @@ export const userLogIn = async (email, password) => {
   }
 };
 
-// signInWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//   });
+
