@@ -17,7 +17,7 @@ const login = () => {
             <p class="welcome"> Mediary your space to share about books and its movie adaptations</p>
             <div class="user-input">
                 <input class="email" type="text" value="" placeholder="email ">
-                <input class="password" type="text" value="" placeholder="password ">
+                <input class="password" type="password" value="" placeholder="password ">
                 <button id="login" class="log-in">Log In</button>
                 <a href="">Forgot Password?</a>
             </div>
@@ -34,33 +34,17 @@ const login = () => {
   const loginContainer = document.createElement('div');
   loginContainer.innerHTML = templateLogin;
   //======== BOTON LOGIN - ONCLICK => SYNC - SIGNINMAILPSS (FIREBASE) -> ONNAVIGATE(FEED)
-  const login = loginContainer.querySelector('.log-in');
+const login = loginContainer.querySelector('.log-in');
+  login.addEventListener('click', async () => {
+
   const email = loginContainer.querySelector('.email').value;
   const password = loginContainer.querySelector('.password').value;
-
-  login.addEventListener('click', async () => {
-    console.log(email);
+  
     const userLoged = await userLogIn(email, password);
     console.log('aqui es el userlog:', userLoged);
     onNavigate('/feed');
     console.log('click login lleva a feed');
-
-    // signInWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     console.log('signed in');
-    //     const user = userCredential.user;
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     console.log(`error: ${error}`);
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     //["invalid-email" /* INVALID_EMAIL */]: 'The email address is badly formatted.',
-    //   });
-    // onNavigate('/feed');
-    // console.log('click login lleva a feed');
   });
-
   //========FORGOT PASSWORD??'PASSWORD_RESET' ========//
 
   //========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======

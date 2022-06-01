@@ -83,7 +83,7 @@ nav {
 }
 
 .post,
-.posted {
+.interaction-posted {
   display: flex;
   background-color: #242731;
   padding: 5%;
