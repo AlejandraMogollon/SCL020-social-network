@@ -40,7 +40,7 @@ const feed = ()=>{
     
     signOut(auth).then(() => {
       console.log('Sign-out successful.')
-      // onNavigate('/login')
+      onNavigate('/')
     }).catch((error) => {
       console.log(error, 'An error happened.')
     });
@@ -52,7 +52,9 @@ const btnPost = feedContainer.querySelector('.post-btn');
 btnPost.addEventListener('click', ()=>{
   const rootFeed = feedContainer.querySelector('.root-post');
   let textPost = feedContainer.querySelector('.text-post');
-  createData("joaquin")
+  let textPost2 = textPost.value;
+
+  createData(auth.currentUser.uid,textPost2, auth.currentUser.email )
   rootFeed.innerHTML = 
     `<div class="interaction-posted">
             <p class="posted-text"> ${textPost.value} </p>
@@ -63,7 +65,10 @@ btnPost.addEventListener('click', ()=>{
             </div>
           </div>`
   console.log('post button clicked')
-  console.log(auth)
+  //console.log(auth)
+  console.log(auth.currentUser.email)
+  console.log(auth.currentUser.name)
+  
   textPost.value =""
 })
 // interaction-posted

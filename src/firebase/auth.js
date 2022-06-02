@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   getAuth,GoogleAuthProvider,getRedirectResult,
-  signOut,
+  signOut, signInWithRedirect
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
 import { auth } from '../firebase/init.js';
 
@@ -13,7 +13,7 @@ export const createUser = async (email, password) => {
     const userCreated = await createUserWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
     return userCreated;
   } catch (error) {
@@ -35,3 +35,12 @@ export const userLogIn = async (email, password) => {
 };
 
 
+export const googleLog = async (auth, provider) => {
+  try{
+    const googleUser = await signInWithRedirect(auth, provider);
+    return googleUser;
+  } catch (error) {
+    console.log(`Error while logging with google: ${error.message}`);
+    throw error;
+  }
+}

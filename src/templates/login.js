@@ -1,12 +1,13 @@
 import { onNavigate } from '../router/router.js';
-// import { auth, provider } from '../firebase/init.js';
+import { provider,auth } from '../firebase/init.js';
+
 // import {
 //   signInWithEmailAndPassword,
 //   GoogleAuthProvider,
 //   signInWithRedirect,
 //   getRedirectResult,
 // } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
-import { userLogIn } from '../firebase/auth.js';
+import { googleLog, userLogIn } from '../firebase/auth.js';
 const login = () => {
   const templateLogin = `
         <section>
@@ -16,6 +17,7 @@ const login = () => {
             </div>
             <p class="welcome"> Mediary your space to share about books and its movie adaptations</p>
             <div class="user-input">
+                <p> Enter your email and password to Sign In</p>
                 <input class="email" type="text" value="" placeholder="email ">
                 <input class="password" type="password" value="" placeholder="password ">
                 <button id="login" class="log-in">Log In</button>
@@ -23,7 +25,7 @@ const login = () => {
             </div>
             <img src="https://source.unsplash.com/random/500x400" width="80px"alt="Random Image">
             <div class="separation-div"> --- o --- </div>
-            <button id="signInGoogle" class="sign-in-google"> <img src="img/logo-Google.png" alt="logo-Google">  Google</button>
+            <button id="signInGoogle" class="sign-in-google"> <img src="img/logo-Google.png" alt="logo-Google"> Sign In with Google</button>
             <div class="registration">
                 <p> Don't have an account?  <button class="btnSignUp" id="btnSignUp"  >Sign Up here</button></p>
             </div>      
@@ -49,9 +51,8 @@ const login = loginContainer.querySelector('.log-in');
 
   //========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======
   const signInGoogle = loginContainer.querySelector('.sign-in-google');
-  signInGoogle.addEventListener('click', () => {
-    //signInWithRedirect(auth, provider);//retorna una promesa
-    console.log('boton google');
+  signInGoogle.addEventListener('click', async () => {
+    const googleUser = await googleLog(auth, provider);//retorna una promesa
     onNavigate('/feed');
   });
 
