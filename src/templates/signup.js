@@ -11,8 +11,9 @@ const signUp = () => {
       </div>
       <p class="p-signup-msge"> Create an account to start sharing</p>
       <div class="user-input">
+        <input class="name" type="text" value="" placeholder="name">
         <input class="email" type="text" value="" placeholder="email ">
-        <input class="password" type="text" value="" placeholder="password ">
+        <input class="password" type="password" value="" placeholder="password ">
         <button class="button-signup">Sign Up</button>
         <a href="">Already have an account?</a>
       </div> 
@@ -25,6 +26,7 @@ const signUp = () => {
   //BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
   const buttonSignUp = signUpContainer.querySelector('.button-signup');
   buttonSignUp.addEventListener('click', async () => {
+    
     const email = signUpContainer.querySelector('.email').value;
     const password = signUpContainer.querySelector('.password').value;
 

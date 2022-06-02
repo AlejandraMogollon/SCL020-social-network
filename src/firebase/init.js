@@ -6,7 +6,7 @@ import config from './config.js';
 
 const app = initializeApp(config);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider(app);
+const provider =  new GoogleAuthProvider(app);
 const db = getFirestore(app);
 //DATABASE 
 
