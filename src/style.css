@@ -32,7 +32,7 @@ input {
 }
 
 .welcome,
-.signup {
+.main-signup {
   text-align: center;
   margin: 0 2% 0 2%;
   display: flex;
