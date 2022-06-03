@@ -54,9 +54,10 @@ btnPost.addEventListener('click', ()=>{
   let textPost = feedContainer.querySelector('.text-post');
   let textPost2 = textPost.value;
 
-  createData(auth.currentUser.uid,textPost2, auth.currentUser.email )
+  createData(auth.currentUser.uid,textPost2, auth.currentUser.email, auth.currentUser.name)
   rootFeed.innerHTML = 
     `<div class="interaction-posted">
+      <p class="user-name"> ${auth.currentUser.name} </p>
             <p class="posted-text"> ${textPost.value} </p>
             <div class="icons-posted">
               <img  src="img/like-icon.png" alt="heart-icon">
@@ -66,8 +67,8 @@ btnPost.addEventListener('click', ()=>{
           </div>`
   console.log('post button clicked')
   //console.log(auth)
-  console.log(auth.currentUser.email)
-  console.log(auth.currentUser.name)
+  
+  console.log(auth.currentUser)
   
   textPost.value =""
 })

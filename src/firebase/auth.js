@@ -5,16 +5,20 @@ import {
   signOut, signInWithRedirect
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
 import { auth } from '../firebase/init.js';
+import { createData } from '../firebase/firestore.js';
 
-
-export const createUser = async (email, password) => {
+export const createUser = async (email, password,name) => {
   try {
     console.log('auth en create:', auth);
     const userCreated = await createUserWithEmailAndPassword(
       auth,
       email,
       password,
-    );
+      
+          );
+          console.log(userCreated)
+    userCreated.user.displayName=name
+    userCreated.user.name=name
     return userCreated;
   } catch (error) {
     console.log(`Error creating an user: ${error.message}`);
