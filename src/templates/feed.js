@@ -56,18 +56,31 @@ const feed = () => {
 
     createData(auth.currentUser.uid, textPost2, auth.currentUser.email);
 
-    rootFeed.innerHTML = `<div class="interaction-posted">
+
+  createData(auth.currentUser.uid,textPost2, auth.currentUser.email, auth.currentUser.name)
+  rootFeed.innerHTML = 
+    `<div class="interaction-posted">
+      <p class="user-name"> ${auth.currentUser.name} </p>
+
             <p class="posted-text"> ${textPost.value} </p>
             <div class="icons-posted">
               <img  src="img/like-icon.png" alt="heart-icon">
               <p class="likes-count">"0"</p>
               <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
             </div>
-          </div>`;
-    console.log('post button clicked');
-    //console.log(auth)
-    console.log(auth.currentUser.email);
-    console.log(auth.currentUser.name);
+
+          </div>`
+  console.log('post button clicked')
+  //console.log(auth)
+  
+  console.log(auth.currentUser)
+  
+  textPost.value =""
+})
+// interaction-posted
+  return feedContainer
+    }
+
 
     textPost.value = '';
   });

@@ -26,12 +26,12 @@ const signUp = () => {
   //BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
   const buttonSignUp = signUpContainer.querySelector('.button-signup');
   buttonSignUp.addEventListener('click', async () => {
-    
+    const name = signUpContainer.querySelector('.name').value;
     const email = signUpContainer.querySelector('.email').value;
     const password = signUpContainer.querySelector('.password').value;
 
     if (validateEmail(email) && validatePss(password)) {
-      const fbResponse = await createUser(email, password);
+      const fbResponse = await createUser( email, password,name);
       console.log('este es el user log', fbResponse.user.uid);
       onNavigate('/feed');
       // console.log(`this is the uid created user: ${user.uid}`);
