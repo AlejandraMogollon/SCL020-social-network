@@ -1,11 +1,10 @@
-import { onNavigate } from "../router/router.js";
-import {auth} from "../firebase/init.js"
-import {createData} from "../firebase/firestore.js"
-import {signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá! 
+import { onNavigate } from '../router/router.js';
+import { auth } from '../firebase/init.js';
+import { createData } from '../firebase/firestore.js';
+import { signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá!
 
-
-const feed = ()=>{
-    const templateFeed = ` <header>
+const feed = () => {
+  const templateFeed = ` <header>
     <nav>
       <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
@@ -30,40 +29,46 @@ const feed = ()=>{
       <button class="btnLogOut"> Log out</button>
     </main>
   </section> `;
-//TEMPLATE FEED A FEEDCONTAINER (DIV)  
+  //TEMPLATE FEED A FEEDCONTAINER (DIV)
   const feedContainer = document.createElement('div');
   feedContainer.innerHTML = templateFeed;
- 
-//BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)  
-  const btnLogOut  = feedContainer.querySelector('.btnLogOut')
-  btnLogOut.addEventListener('click', ()=>{
-    
-    signOut(auth).then(() => {
-      console.log('Sign-out successful.')
-      onNavigate('/')
-    }).catch((error) => {
-      console.log(error, 'An error happened.')
-    });
-    console.log('btnLogout Clicked')
-  })
-//BOTON POST
-const btnPost = feedContainer.querySelector('.post-btn');
 
-btnPost.addEventListener('click', ()=>{
-  const rootFeed = feedContainer.querySelector('.root-post');
-  let textPost = feedContainer.querySelector('.text-post');
-  let textPost2 = textPost.value;
+  //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
+  const btnLogOut = feedContainer.querySelector('.btnLogOut');
+  btnLogOut.addEventListener('click', () => {
+    signOut(auth)
+      .then(() => {
+        console.log('Sign-out successful.');
+        onNavigate('/');
+      })
+      .catch((error) => {
+        console.log(error, 'An error happened.');
+      });
+    console.log('btnLogout Clicked');
+  });
+  //BOTON POST
+  const btnPost = feedContainer.querySelector('.post-btn');
+
+  btnPost.addEventListener('click', () => {
+    const rootFeed = feedContainer.querySelector('.root-post');
+    let textPost = feedContainer.querySelector('.text-post');
+    let textPost2 = textPost.value;
+
+    createData(auth.currentUser.uid, textPost2, auth.currentUser.email);
+
 
   createData(auth.currentUser.uid,textPost2, auth.currentUser.email, auth.currentUser.name)
   rootFeed.innerHTML = 
     `<div class="interaction-posted">
       <p class="user-name"> ${auth.currentUser.name} </p>
+
             <p class="posted-text"> ${textPost.value} </p>
             <div class="icons-posted">
               <img  src="img/like-icon.png" alt="heart-icon">
               <p class="likes-count">"0"</p>
               <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
             </div>
+
           </div>`
   console.log('post button clicked')
   //console.log(auth)
@@ -76,13 +81,18 @@ btnPost.addEventListener('click', ()=>{
   return feedContainer
     }
 
-export default feed
 
+    textPost.value = '';
+  });
+  // interaction-posted
+  return feedContainer;
+};
+
+export default feed;
 
 // import { onNavigate } from "../router/router.js";
 // import {auth} from "../firebase/init.js"
-// import {signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá! 
-
+// import {signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá!
 
 // const feed = ()=>{
 //     const templateFeed = ` <header>
@@ -122,20 +132,19 @@ export default feed
 //             <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
 //           </div>
 //         </div>
-//        </div> 
+//        </div>
 //       </div>
 //       <button class="btnLogOut"> Log out</button>
 //     </main>
 //   </section> `;
-// //TEMPLATE FEED A FEEDCONTAINER (DIV)  
+// //TEMPLATE FEED A FEEDCONTAINER (DIV)
 //   const feedContainer = document.createElement('div');
 //   feedContainer.innerHTML = templateFeed;
 
-  
-// //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)  
+// //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
 //   const btnLogOut  = feedContainer.querySelector('.btnLogOut')
 //   btnLogOut.addEventListener('click', ()=>{
-    
+
 //     signOut(auth).then(() => {
 //       console.log('Sign-out successful.')
 //       // onNavigate('/login')
@@ -143,13 +152,13 @@ export default feed
 //       console.log(error, 'An error happened.')
 //     });
 //     console.log('btnLogout Clicked')
-   
+
 //   })
 // //BOTON POST
 // const btnPost = feedContainer.querySelector('.post-btn');
 // const publishedPostContainer = feedContainer.querySelector('.old-posts');
 // btnPost.addEventListener('click', ()=>{
-//   publishedPostContainer.innerHTML = 
+//   publishedPostContainer.innerHTML =
 //   `<div class="interaction-posted">
 //           <p class="posted-text"> Lorem ipsum dolor sit amet consectetur adipisicing elit.   </p>
 //           <div class="icons-posted">

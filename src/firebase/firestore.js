@@ -1,3 +1,4 @@
+
 import { collection, addDoc, Timestamp, getDocs } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js";
 import { db } from '../firebase/init.js';
 //parametros de lo q queremos guardar (ej "ada")
@@ -19,6 +20,7 @@ try {
 }
 }
 
+
 // export const getPost = async () => {
 // const querySnapshot = await getDocs(collection(db, "post"));
 
@@ -26,6 +28,7 @@ try {
 // return querySnapshot
 
 // }
+
 
 //POSTSSSSSSS
 // const querySnapshot = await getDocs(collection(db, "post"));
@@ -38,6 +41,7 @@ try {
 // console.log(querySnapshot)
 // console.log(`${doc.id}`)
 // getPost()
+
 
 
 
