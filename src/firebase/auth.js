@@ -18,7 +18,6 @@ import { createData } from '../firebase/firestore.js';
 import { db } from '../firebase/init.js';
 
 
-
 export const createUser = async (email, password, name) => {
   try {
     // Aqui creamos es un Auth (Esto no es un usuario)

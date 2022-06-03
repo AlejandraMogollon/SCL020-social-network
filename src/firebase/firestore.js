@@ -40,9 +40,22 @@ export const getUserData = async (userUid) => {
     where('id', '==', userUid)
   );
   const userFirebase = await getDocs(querySelector);
-
+    console.log(userFirebase.docs[0].data())
+    console.log(db)
+console.log(collection)
   return userFirebase.docs[0].data();
 };
+
+// export const getPosts = async () => {
+//   const querySelector = await query(
+//     collection(db, 'post'),
+//     where('post', '==', true)
+//   );
+//   const userFirebase = await getDocs(querySelector);
+
+//   return userFirebase.docs[0].data();
+// };
+
 
 // export const getPost = async () => {
 // const querySnapshot = await getDocs(collection(db, "post"));
@@ -53,13 +66,19 @@ export const getUserData = async (userUid) => {
 // }
 
 //POSTSSSSSSS
-// const querySnapshot = await getDocs(collection(db, "post"));
-// querySnapshot.forEach((doc) => {
-//   let prueba = [...Object.values(doc.data())]
-//   console.log(prueba)
-//   console.log(`${doc.id} => ${doc.data()}`);
-//   ;
-// });
+const getPost = async () => {
+const querySnapshot = await getDocs(collection(db, "post"));
+querySnapshot.forEach((doc) => {
+  let prueba = [...Object.keys(doc.data())]
+  console.log(prueba)
+  let docuObj = doc.data()
+  console.log(docuObj.post)
+  //let docuString = JSON.stringify(doc.data()) 
+  
+  
+  ;
+});
+}
 // console.log(querySnapshot)
 // console.log(`${doc.id}`)
-// getPost()
+getPost()
