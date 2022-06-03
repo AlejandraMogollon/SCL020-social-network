@@ -1,8 +1,7 @@
 import { onNavigate } from '../router/router.js';
 import { auth } from '../firebase/init.js';
-import { createData } from '../firebase/firestore.js';
+import { createData, getUserData } from '../firebase/firestore.js';
 import { signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá!
-
 const feed = () => {
   const templateFeed = ` <header>
     <nav>
@@ -49,18 +48,25 @@ const feed = () => {
   //BOTON POST
   const btnPost = feedContainer.querySelector('.post-btn');
 
-  btnPost.addEventListener('click', () => {
+  btnPost.addEventListener('click', async () => {
     const rootFeed = feedContainer.querySelector('.root-post');
     let textPost = feedContainer.querySelector('.text-post');
     let textPost2 = textPost.value;
 
-    createData(auth.currentUser.uid, textPost2, auth.currentUser.email);
+    //al darle clic a post, nos traemos esa data y la usamos para llamarla dandole los .id, .mail .nombrecito
+    //y si queremos el nombre lo imprimimos en el html
+    //no esta bien que sea cada vez que le demos clic al post, debemos buscar una forma de traerlo automaticamente al cargar el feed
+    //cuando creemos los post es mejor usar un map que un forEach.
+    const userData = await getUserData(auth.currentUser.uid);
 
-
-  createData(auth.currentUser.uid,textPost2, auth.currentUser.email, auth.currentUser.name)
-  rootFeed.innerHTML = 
-    `<div class="interaction-posted">
-      <p class="user-name"> ${auth.currentUser.name} </p>
+    await createData(
+      userData.id,
+      textPost2,
+      userData.mail,
+      userData.nombrecito
+    );
+    rootFeed.innerHTML = `<div class="interaction-posted">
+      <p class="user-name"> ${userData.nombrecito} </p>
 
             <p class="posted-text"> ${textPost.value} </p>
             <div class="icons-posted">
@@ -69,18 +75,8 @@ const feed = () => {
               <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
             </div>
 
-          </div>`
-  console.log('post button clicked')
-  //console.log(auth)
-  
-  console.log(auth.currentUser)
-  
-  textPost.value =""
-})
-// interaction-posted
-  return feedContainer
-    }
-
+          </div>`;
+    console.log('post button clicked');
 
     textPost.value = '';
   });

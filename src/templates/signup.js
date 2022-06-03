@@ -15,7 +15,7 @@ const signUp = () => {
         <input class="email" type="text" value="" placeholder="email ">
         <input class="password" type="password" value="" placeholder="password ">
         <button class="button-signup">Sign Up</button>
-        <a href="">Already have an account?</a>
+        <button class="have-account">Already have an account?</button>
       </div> 
     </main>
   </section> `;
@@ -23,6 +23,14 @@ const signUp = () => {
   //TEMPLATE SIGNUP A SIGNUPCONTAINER (DIV)
   const signUpContainer = document.createElement('div');
   signUpContainer.innerHTML = templateSignUp;
+
+  //BUTTON ALREADY HAVE AN ACCOUNT -ONCLICK => -> ONNAVIGATE(LOGIN);
+  const buttonHaveAcc = signUpContainer.querySelector('.have-account');
+  buttonHaveAcc.addEventListener('click', () => {
+    console.log('di click:', buttonHaveAcc);
+    onNavigate('/');
+  });
+
   //BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
   const buttonSignUp = signUpContainer.querySelector('.button-signup');
   buttonSignUp.addEventListener('click', async () => {
@@ -31,7 +39,7 @@ const signUp = () => {
     const password = signUpContainer.querySelector('.password').value;
 
     if (validateEmail(email) && validatePss(password)) {
-      const fbResponse = await createUser( email, password,name);
+      const fbResponse = await createUser(email, password, name);
       console.log('este es el user log', fbResponse.user.uid);
       onNavigate('/feed');
       // console.log(`this is the uid created user: ${user.uid}`);

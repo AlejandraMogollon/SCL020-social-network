@@ -1,5 +1,5 @@
 import { onNavigate } from '../router/router.js';
-import { provider,auth } from '../firebase/init.js';
+import { provider, auth } from '../firebase/init.js';
 
 // import {
 //   signInWithEmailAndPassword,
@@ -16,8 +16,8 @@ const login = () => {
                 <img src="img/logo-Mediary.png" alt="logo-mediary">
             </div>
             <p class="welcome"> Mediary your space to share about books and its movie adaptations</p>
+            <p class="input-text-intro"> Enter your email and password to Sign In</p>
             <div class="user-input">
-                <p> Enter your email and password to Sign In</p>
                 <input class="email" type="text" value="" placeholder="email ">
                 <input class="password" type="password" value="" placeholder="password ">
                 <button id="login" class="log-in">Log In</button>
@@ -36,12 +36,11 @@ const login = () => {
   const loginContainer = document.createElement('div');
   loginContainer.innerHTML = templateLogin;
   //======== BOTON LOGIN - ONCLICK => SYNC - SIGNINMAILPSS (FIREBASE) -> ONNAVIGATE(FEED)
-const login = loginContainer.querySelector('.log-in');
+  const login = loginContainer.querySelector('.log-in');
   login.addEventListener('click', async () => {
+    const email = loginContainer.querySelector('.email').value;
+    const password = loginContainer.querySelector('.password').value;
 
-  const email = loginContainer.querySelector('.email').value;
-  const password = loginContainer.querySelector('.password').value;
-  
     const userLoged = await userLogIn(email, password);
     console.log('aqui es el userlog:', userLoged);
     onNavigate('/feed');
@@ -52,7 +51,7 @@ const login = loginContainer.querySelector('.log-in');
   //========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======
   const signInGoogle = loginContainer.querySelector('.sign-in-google');
   signInGoogle.addEventListener('click', async () => {
-    const googleUser = await googleLog(auth, provider);//retorna una promesa
+    const googleUser = await googleLog(auth, provider); //retorna una promesa
     onNavigate('/feed');
   });
 

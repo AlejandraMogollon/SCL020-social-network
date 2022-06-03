@@ -41,6 +41,7 @@ input {
 }
 
 a {
+  margin-top: 10%  ;
   text-align: center;
   font-size: smaller;
   color: #ff9505;
@@ -48,7 +49,8 @@ a {
 }
 
 .log-in,
-.post-btn {
+.post-btn,
+.button-signup {
   border: 0;
   color: white;
   background-color: #ff9505;
@@ -144,4 +146,15 @@ nav {
 
 .user-input {
   align-self: center;
+}
+
+.btnSignUp,
+.have-account {
+  padding: 0; border: none; background: none;
+  color: #ff9505;
+}
+
+.input-text-intro{
+  margin-bottom: 0%;
+  font-size: smaller;
 }
