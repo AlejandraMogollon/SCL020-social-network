@@ -23,9 +23,6 @@ export const createData = async (
       mail: userEmail,
       nombrecito: displayName,
     });
-
-    console.log('docRef:', docRef);
-    console.log('Document written with ID: ', docRef.id);
   } catch (e) {
     console.error('Error adding document: ', e);
   }
@@ -40,9 +37,10 @@ export const getUserData = async (userUid) => {
     where('id', '==', userUid)
   );
   const userFirebase = await getDocs(querySelector);
-    console.log(userFirebase.docs[0].data())
-    console.log(db)
-console.log(collection)
+  //     console.log(userFirebase.docs[0].data())
+  //     console.log(db)
+  // console.log(collection)
+
   return userFirebase.docs[0].data();
 };
 
@@ -56,7 +54,6 @@ console.log(collection)
 //   return userFirebase.docs[0].data();
 // };
 
-
 // export const getPost = async () => {
 // const querySnapshot = await getDocs(collection(db, "post"));
 
@@ -66,19 +63,18 @@ console.log(collection)
 // }
 
 //POSTSSSSSSS
-const getPost = async () => {
-const querySnapshot = await getDocs(collection(db, "post"));
-querySnapshot.forEach((doc) => {
-  let prueba = [...Object.keys(doc.data())]
-  console.log(prueba)
-  let docuObj = doc.data()
-  console.log(docuObj.post)
-  //let docuString = JSON.stringify(doc.data()) 
-  
-  
-  ;
-});
-}
+export const getPost = async () => {
+  const querySnapshot = await getDocs(collection(db, 'post'));
+  let postArr = [];
+  querySnapshot.forEach((doc) => {
+    // let prueba = [...Object.keys(doc.data())]
+    // console.log(prueba)
+    // let docuObj = doc.data();
+    postArr.push(doc.data());
+    // console.log(docuObj.post)
+    //let docuString = JSON.stringify(doc.data())
+  });
+  return postArr;
+};
 // console.log(querySnapshot)
 // console.log(`${doc.id}`)
-getPost()

@@ -85,7 +85,8 @@ nav {
 }
 
 .post,
-.interaction-posted {
+.interaction-posted,
+.post-area {
   display: flex;
   background-color: #242731;
   padding: 5%;
@@ -158,3 +159,11 @@ nav {
   margin-bottom: 0%;
   font-size: smaller;
 }
+
+.root-post{
+  padding: 5px;
+	height: 1000px;
+	width: 350px;
+	overflow-y: scroll;
+}
+

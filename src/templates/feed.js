@@ -1,8 +1,9 @@
 import { onNavigate } from '../router/router.js';
 import { auth } from '../firebase/init.js';
-import { createData, getUserData } from '../firebase/firestore.js';
+import { createData, getPost, getUserData } from '../firebase/firestore.js';
 import { signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá!
-const feed = () => {
+
+const feed = async () => {
   const templateFeed = ` <header>
     <nav>
       <img src="img/menu-icon.png" alt="">
@@ -47,11 +48,35 @@ const feed = () => {
   });
   //BOTON POST
   const btnPost = feedContainer.querySelector('.post-btn');
+  let rootFeed = feedContainer.querySelector('.root-post');
+  // const textPost = feedContainer.querySelector('.text-post');
+  // const textPost2 = textPost.value;
+
+  //CREATE ARRAY DE POST
+  const arrayPost = await getPost();
+  const postSorted = arrayPost.sort((x, y) => {
+    return y.date - x.date;
+  });
+  postSorted.forEach((post) => {
+    rootFeed.innerHTML += `
+    <div class"post-area">
+    <div class="interaction-posted">
+    <p class="user-name"> ${post.nombrecito} </p>
+
+          <p class="posted-text"> ${post.post} </p>
+          <div class="icons-posted">
+            <img  src="img/like-icon.png" alt="heart-icon">
+            <p class="likes-count">"0"</p>
+            <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
+          </div>
+        </div>
+        </div>`;
+  });
 
   btnPost.addEventListener('click', async () => {
-    const rootFeed = feedContainer.querySelector('.root-post');
-    let textPost = feedContainer.querySelector('.text-post');
-    let textPost2 = textPost.value;
+    // const rootFeed = feedContainer.querySelector('.root-post');
+    const textPost = feedContainer.querySelector('.text-post');
+    const textPost2 = textPost.value;
 
     //al darle clic a post, nos traemos esa data y la usamos para llamarla dandole los .id, .mail .nombrecito
     //y si queremos el nombre lo imprimimos en el html
@@ -65,9 +90,10 @@ const feed = () => {
       userData.mail,
       userData.nombrecito
     );
-    rootFeed.innerHTML = `<div class="interaction-posted">
+    rootFeed.innerHTML =
+      `
+    <div class="interaction-posted">
       <p class="user-name"> ${userData.nombrecito} </p>
-
             <p class="posted-text"> ${textPost.value} </p>
             <div class="icons-posted">
               <img  src="img/like-icon.png" alt="heart-icon">
@@ -75,7 +101,7 @@ const feed = () => {
               <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
             </div>
 
-          </div>`;
+          </div>` + rootFeed.innerHTML;
     console.log('post button clicked');
 
     textPost.value = '';
