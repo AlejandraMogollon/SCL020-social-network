@@ -6,7 +6,7 @@ const routes = {
   // path: '/'
   // template:home()
   '/': login(),
-  '/feed': feed(),
+  '/feed': await feed(),
   '/signup': signUp(),
 };
 
