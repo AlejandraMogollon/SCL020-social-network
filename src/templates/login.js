@@ -1,12 +1,6 @@
 import { onNavigate } from '../router/router.js';
 import { provider, auth } from '../firebase/init.js';
 
-// import {
-//   signInWithEmailAndPassword,
-//   GoogleAuthProvider,
-//   signInWithRedirect,
-//   getRedirectResult,
-// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
 import { googleLog, userLogIn } from '../firebase/auth.js';
 const login = () => {
   const templateLogin = `
@@ -62,25 +56,7 @@ const login = () => {
     console.log('click signup lleva a la pag signup');
   });
 
-  // getRedirectResult(auth)
-  //   .then((result) => {
-  //     // This gives you a Google Access Token. You can use it to access Google APIs.
-  //     console.log(getRedirectResult(auth), new Date)
-  //     const credential = GoogleAuthProvider.credentialFromResult(result);
-  //     const token = credential.accessToken;
 
-  //     // The signed-in user info.
-  //     const user = result.user;
-  //   }).catch((error) => {
-  //     // Handle Errors here.
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     // The email of the user's account used.
-  //     const email = error.email;
-  //     // The AuthCredential type that was used.
-  //     const credential = GoogleAuthProvider.credentialFromError(error);
-  //     // ...
-  //   });
 
   return loginContainer;
 };

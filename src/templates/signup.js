@@ -1,6 +1,6 @@
 import { createUser } from '../firebase/auth.js';
 import { onNavigate } from '../router/router.js';
-import { validateEmail, validatePss } from '../utility.js';
+
 
 const signUp = () => {
   const templateSignUp = `
@@ -43,7 +43,7 @@ const signUp = () => {
     onNavigate('/feed');}else{alert('You must provide a Name')}
     // console.log(`this is the uid created user: ${user.uid}`);
   });
-  //ALREADYACCOUNT -ONCLICK => ??;
+  
   return signUpContainer;
 };
 
