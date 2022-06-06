@@ -28,10 +28,8 @@ export const createUser = async (email, password, name) => {
       email,
       password
     );
-    // userCreated.user.displayName = name;
-    // userCreated.user.name = name;
-
-    // Aca se crea una collection User y se agregan los campos extras necesarios. incluyendo mail, nombrecito
+    
+    // Aca se crea una collection User y se agregan los campos extras necesarios. incluyendo mail, nick
     // el id usado es el mismo uid de firebase
     //ahora a firestore
     await addDoc(collection(db, 'user'), {
@@ -39,8 +37,8 @@ export const createUser = async (email, password, name) => {
       id: userCreated.user.uid,
       mail: email,
       password,
-      nombrecito: name,
-      // Se pueden agregar mas campos aca.
+      nick: name,
+      // photoURL
     });
     return userCreated;
   } catch (error) {
@@ -68,8 +66,8 @@ export const createUser = async (email, password, name) => {
 
 export const userLogIn = async (email, password) => {
   try {
-    console.log('auth en login:', auth);
-    const userLoged = await signInWithEmailAndPassword(auth, email, password);
+    // console.log('auth en login:', auth);
+    const userLoged = await signInWithEmailAndPassword(auth, email, password); //return user credentials
     return userLoged;
   } catch (error) {
     switch(error.message) {
@@ -82,12 +80,16 @@ export const userLogIn = async (email, password) => {
         case 'Firebase: Error (auth/wrong-password).':
         alert('Something went wrong, check your email or password')
         break
+        case 'Firebase: Error (auth/internal-error).':
+        alert('Something went wrong, check your email or password')
+        break
     }
     console.log(`Error while logging: ${error.message}`);
     throw error;
   }
 };
 
+//REVISAR - PROBLEMAS ONNAVIGATE, VUELVE A LOGIN EN VEZ DE FEED
 export const googleLog = async (auth, provider) => {
   try {
     const googleUser = await signInWithRedirect(auth, provider);
@@ -97,3 +99,24 @@ export const googleLog = async (auth, provider) => {
     throw error;
   }
 };
+
+
+  // getRedirectResult(auth)
+  //   .then((result) => {
+  //     // This gives you a Google Access Token. You can use it to access Google APIs.
+  //     console.log(getRedirectResult(auth), new Date)
+  //     const credential = GoogleAuthProvider.credentialFromResult(result);
+  //     const token = credential.accessToken;
+
+  //     // The signed-in user info.
+  //     const user = result.user;
+  //   }).catch((error) => {
+  //     // Handle Errors here.
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     // The email of the user's account used.
+  //     const email = error.email;
+  //     // The AuthCredential type that was used.
+  //     const credential = GoogleAuthProvider.credentialFromError(error);
+  //     // ...
+  //   });

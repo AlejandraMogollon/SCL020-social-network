@@ -5,6 +5,9 @@ import {
   getDocs,
   query,
   where,
+  doc, 
+  updateDoc, 
+  deleteField
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
 import { db } from '../firebase/init.js';
 
@@ -21,7 +24,7 @@ export const createData = async (
       date: Timestamp.now(),
       user: currentUser,
       mail: userEmail,
-      nombrecito: displayName,
+      nick: displayName,
     });
   } catch (e) {
     console.error('Error adding document: ', e);
@@ -37,44 +40,18 @@ export const getUserData = async (userUid) => {
     where('id', '==', userUid)
   );
   const userFirebase = await getDocs(querySelector);
-  //     console.log(userFirebase.docs[0].data())
-  //     console.log(db)
-  // console.log(collection)
-
   return userFirebase.docs[0].data();
 };
 
-// export const getPosts = async () => {
-//   const querySelector = await query(
-//     collection(db, 'post'),
-//     where('post', '==', true)
-//   );
-//   const userFirebase = await getDocs(querySelector);
 
-//   return userFirebase.docs[0].data();
-// };
-
-// export const getPost = async () => {
-// const querySnapshot = await getDocs(collection(db, "post"));
-
-//   console.log(querySnapshot._snapshot)
-// return querySnapshot
-
-// }
-
-//POSTSSSSSSS
 export const getPost = async () => {
   const querySnapshot = await getDocs(collection(db, 'post'));
   let postArr = [];
   querySnapshot.forEach((doc) => {
-    // let prueba = [...Object.keys(doc.data())]
-    // console.log(prueba)
-    // let docuObj = doc.data();
     postArr.push(doc.data());
-    // console.log(docuObj.post)
-    //let docuString = JSON.stringify(doc.data())
   });
   return postArr;
 };
-// console.log(querySnapshot)
-// console.log(`${doc.id}`)
+
+
+//VALIDAR QUE TEXTO POST NO ESTE VACIO 
