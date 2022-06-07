@@ -5,9 +5,9 @@ import {
   getDocs,
   query,
   where,
-  doc, 
-  updateDoc, 
-  deleteField
+  doc,
+  updateDoc,
+  deleteField,
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
 import { db } from '../firebase/init.js';
 
@@ -26,6 +26,7 @@ export const createData = async (
       mail: userEmail,
       nick: displayName,
     });
+    console.log('id:', docRef.id);
   } catch (e) {
     console.error('Error adding document: ', e);
   }
@@ -43,15 +44,15 @@ export const getUserData = async (userUid) => {
   return userFirebase.docs[0].data();
 };
 
-
 export const getPost = async () => {
   const querySnapshot = await getDocs(collection(db, 'post'));
   let postArr = [];
   querySnapshot.forEach((doc) => {
     postArr.push(doc.data());
   });
+  console.log(db.data);
   return postArr;
 };
+getPost();
 
-
-//VALIDAR QUE TEXTO POST NO ESTE VACIO 
+//VALIDAR QUE TEXTO POST NO ESTE VACIO
