@@ -8,7 +8,9 @@ import {
   doc,
   updateDoc,
   deleteField,
+  deleteDoc,
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
+
 import { db } from '../firebase/init.js';
 
 //parametros de lo q queremos guardar (ej "ada")
@@ -19,14 +21,18 @@ export const createData = async (
   displayName
 ) => {
   try {
+    // let postId = Math.random().toString(16).slice(2);
+
     const docRef = await addDoc(collection(db, 'post'), {
       post: textPost2,
       date: Timestamp.now(),
       user: currentUser,
       mail: userEmail,
       nick: displayName,
+      // postId: postId,
     });
-    console.log('id:', docRef.id);
+    // console.log('id:', docRef.id);
+    return docRef.id;
   } catch (e) {
     console.error('Error adding document: ', e);
   }
@@ -48,11 +54,16 @@ export const getPost = async () => {
   const querySnapshot = await getDocs(collection(db, 'post'));
   let postArr = [];
   querySnapshot.forEach((doc) => {
-    postArr.push(doc.data());
+    const docuData = doc.data();
+    //al obj data se le agrega un campo id que hace refeencia al id de firestore
+    docuData.id = doc.id;
+    postArr.push(docuData);
   });
-  console.log(db.data);
   return postArr;
 };
-getPost();
 
+export const deletePost = async (id) => {
+  await deleteDoc(doc(db, 'post', id));
+  console.log('entre');
+};
 //VALIDAR QUE TEXTO POST NO ESTE VACIO
