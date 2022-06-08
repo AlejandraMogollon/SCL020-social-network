@@ -1,6 +1,11 @@
 import { onNavigate } from '../router/router.js';
 import { auth } from '../firebase/init.js';
-import { createData, getPost, getUserData } from '../firebase/firestore.js';
+import {
+  createData,
+  deletePost,
+  getPost,
+  getUserData,
+} from '../firebase/firestore.js';
 import { signOut } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js'; //sacar de acá!
 
 const feed = async () => {
@@ -57,23 +62,77 @@ const feed = async () => {
   const postSorted = arrayPost.sort((x, y) => {
     return y.date - x.date;
   });
-  postSorted.forEach((post) => {
-    rootFeed.innerHTML += `
-    <div class="interaction-posted">
-      <div class="posted-header"> 
-        <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
-        <p class="user-name"> ${post.nick} </p>
-        <img class="delete-icon"src="img/delete-icon.png" alt="delete-icon">
-        <img class="edit-icon"src="img/edit-icon.png" alt="edit-icon">
-      </div>  
-      <p class="posted-text"> ${post.post} </p>
-          <div class="icons-posted">
-            <img  src="img/like-icon.png" alt="heart-icon">
-            <p class="likes-count">0</p>
-            <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
-          </div>
-        </div>`;
-  });
+
+  if (postSorted.length > 0) {
+    postSorted.forEach((post) => {
+      rootFeed.innerHTML += `
+      <div class="interaction-posted">
+        <div class="posted-header"> 
+          <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
+          <p class="user-name"> ${post.nick} </p>
+          <img class="delete-icon"src="img/delete-icon.png" id=${post.id} alt="delete-icon">
+          <img class="edit-icon"src="img/edit-icon.png" alt="edit-icon">
+        </div>  
+        <p class="posted-text"> ${post.post} </p>
+            <div class="icons-posted">
+              <img class="heart-icon" src="img/like-icon.png" alt="heart-icon">
+              <p class="likes-count">0</p>
+              <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
+            </div>
+          </div>`;
+    });
+  }
+
+  // const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+  // btnDelete.forEach((btn) => {
+  //   btn.addEventListener('click', async (e) => {
+  //     let id = e.target.id;
+  //     // const deleteAlert = confirm('Are you sure you want delete this post?');
+  //     if (true) {
+  //       await deletePost(id);
+  //       window.location.reload();
+  //     } else {
+  //       alert('Your post was not eliminated!!');
+  //     }
+  //   });
+  // });
+
+  //Boton generico para borrar, donde recibe un id de post
+  // const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+  // btnDelete[0].addEventListener('click', () => {
+  //   console.log(feedContainer.querySelectorAll('.delete-icon').value);
+  //   console.log('delete-icon clicked', postId);
+  // });
+
+  // btnDelete.addEventListener('click', () => {
+  //   console.log(feedContainer.querySelectorAll('.delete-icon').value);
+  //   console.log('delete-icon clicked', postId);
+  // });
+
+  // const btnEdit = feedContainer.querySelectorAll('.edit-icon');
+  // btnEdit.forEach((btn) => {
+  //   btn.addEventListener('click', () => {
+  //     console.log('edit-icon clicked');
+  //   });
+  // });
+  // const btnLike = feedContainer.querySelectorAll('.heart-icon');
+  // btnLike.forEach((btn) => {
+  //   btn.addEventListener('click', () => {
+  //     console.log('like-icon clicked');
+  //   });
+  // });
+
+  // const btnComment = feedContainer.querySelectorAll('.comment-icon');
+  // btnComment.forEach((btn) => {
+  //   btn.addEventListener('click', () => {
+  //     console.log('comment-icon clicked');
+  //   });
+  // });
+
+  // btnDelete.addEventListener('click', () => {
+  //   console.log(feedContainer.querySelectorAll('.delete-icon').value);
+  //   console.log('delete-icon clicked', postId);
+  // });
 
   btnPost.addEventListener('click', async () => {
     // const rootFeed = feedContainer.querySelector('.root-post');
@@ -84,33 +143,90 @@ const feed = async () => {
     //no esta bien que sea cada vez que le demos clic al post, debemos buscar una forma de traerlo automaticamente al cargar el feed
     //cuando creemos los post es mejor usar un map que un forEach.
     const userData = await getUserData(auth.currentUser.uid);
-    await createData(
+    const postId = await createData(
       userData.id,
       textPost2,
       userData.mail,
       userData.nick
     );
-    rootFeed.innerHTML =`
+
+    rootFeed.innerHTML =
+      `
     <div class="interaction-posted">
     <div class="posted-header"> 
       <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
       <p class="user-name"> ${userData.nick} </p>
-      <img class="delete-icon"src="img/delete-icon.png" alt="delete-icon">
+      <img class="delete-icon"src="img/delete-icon.png" id=${postId} alt="delete-icon">
       <img class="edit-icon"src="img/edit-icon.png" alt="edit-icon">
     </div>
     <p class="posted-text"> ${textPost.value} </p>
       <div class="icons-posted">
-        <img  src="img/like-icon.png" alt="heart-icon">
+        <img class="heart-icon" src="img/like-icon.png" alt="heart-icon">
         <p class="likes-count">0</p>
         <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
       </div>
     </div>` + rootFeed.innerHTML;
-    console.log('post button clicked');  
+    console.log('post button clicked', postId);
     textPost.value = '';
+    window.location.reload();
+
+    // const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+    // btnDelete.forEach((btn) => {
+    //   btn.addEventListener('click', () => {
+    //     console.log('delete-icon clicked');
+    //   });
+    // });
+
+    // const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+    // btnDelete.forEach((btn) => {
+    //   btn.addEventListener('click', async (e) => {
+    //     let id = e.target.id;
+    //     const deleteAlert = confirm('Are you sure you want delete this post?');
+    //     if (deleteAlert === true) {
+    //       await deletePost(id);
+    //       window.location.reload();
+    //     } else {
+    //       alert('Your post was not eliminated!!');
+    //     }
+    //   });
+    // });
+
+    const btnEdit = feedContainer.querySelectorAll('.edit-icon');
+    btnEdit.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        console.log('edit-icon clicked');
+      });
+    });
+    const btnLike = feedContainer.querySelectorAll('.heart-icon');
+    btnLike.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        console.log('like-icon clicked');
+      });
+    });
+
+    const btnComment = feedContainer.querySelectorAll('.comment-icon');
+    btnComment.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        console.log('comment-icon clicked');
+      });
+    });
+  });
+
+  const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+  btnDelete.forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      let id = e.target.id;
+      const deleteAlert = confirm('Are you sure you want delete this post?');
+      if (deleteAlert === true) {
+        await deletePost(id);
+        window.location.reload();
+      } else {
+        alert('Your post was not eliminated!!');
+      }
+    });
   });
 
   return feedContainer;
 };
 
 export default feed;
-
