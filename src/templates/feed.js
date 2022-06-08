@@ -7,6 +7,7 @@ import {
   getUserData,
 } from "../firebase/firestore.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"; //sacar de acá!
+import { templateCreatedLastPost } from "../templates/feed-post.js";
 
 const feed = async () => {
   const templateFeed = ` 
@@ -100,22 +101,13 @@ const feed = async () => {
     );
     const subRoot = document.createElement("div");
     subRoot.className = "interaction-posted";
-    subRoot.innerHTML = `<div class="posted-header"> 
-      <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
-      <p class="user-name"> ${userData.nick} </p>
-      <img class="delete-icon"src="img/delete-icon.png" id=${postId} alt="delete-icon">
-      <img class="edit-icon"src="img/edit-icon.png" alt="edit-icon">
-    </div>
-    <p class="posted-text"> ${textPost.value} </p>
-      <div class="icons-posted">
-        <img class="heart-icon" src="img/like-icon.png" alt="heart-icon">
-        <p class="likes-count">0</p>
-        <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
-      </div>`;
+    subRoot.innerHTML = await templateCreatedLastPost(
+      userData.nick,
+      postId,
+      textPost.value
+    );
     const firstPost = rootFeed.querySelector(".interaction-posted");
     rootFeed.insertBefore(subRoot, firstPost);
-    // rootFeed.innerHTML = subRoot.innerHTML + rootFeed.innerHTML;
-    //append child
 
     console.log("post button clicked", postId);
     textPost.value = "";
