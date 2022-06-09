@@ -1,6 +1,6 @@
-import { onNavigate } from '../router/router.js';
+import { onNavigate } from "../router/router.js";
 // import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
-import { auth } from './firebase/init.js';
+import { auth } from "./firebase/init.js";
 
 // onAuthStateChanged(auth, (user) => {
 //   if (user) {
