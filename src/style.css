@@ -1,5 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=Raleway");
-
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap");
 @media (max-width: 500px) {
   body {
     background-color: black;
@@ -129,7 +129,11 @@ nav {
 .post-icon-image {
   align-self: flex-start;
 }
-
+.post-date {
+  font-size: 16px;
+  color: #ff9505;
+  padding: 0%;
+}
 .posted-header {
   display: grid;
   grid-template-columns: 1fr 1fr 3fr 1fr 1fr;
@@ -147,6 +151,11 @@ nav {
 .user-name-posted {
   justify-self: start;
   margin-left: 5%;
+}
+.user-name {
+  font-family: "Raleway";
+  font-weight: bold;
+  margin-left: 50%;
 }
 .user-photo {
   width: 80%;
@@ -180,13 +189,21 @@ nav {
   margin-bottom: 0%;
   font-size: smaller;
 }
-
+.posted-text {
+  color: white;
+  background-color: #242731;
+  border: none;
+  resize: none;
+}
 .root-post {
-  padding: 5px;
+  /* padding: 5px; */
   height: auto;
   width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
+}
+body {
+  background-color: black;
 }

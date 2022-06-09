@@ -1,6 +1,5 @@
-import { createUser } from '../firebase/auth.js';
-import { onNavigate } from '../router/router.js';
-
+import { createUser } from "../firebase/auth.js";
+import { onNavigate } from "../router/router.js";
 
 const signUp = () => {
   const templateSignUp = `
@@ -21,29 +20,33 @@ const signUp = () => {
   </section> `;
 
   //TEMPLATE SIGNUP A SIGNUPCONTAINER (DIV)
-  const signUpContainer = document.createElement('div');
+  const signUpContainer = document.createElement("div");
   signUpContainer.innerHTML = templateSignUp;
 
   //BUTTON ALREADY HAVE AN ACCOUNT -ONCLICK => -> ONNAVIGATE(LOGIN);
-  const buttonHaveAcc = signUpContainer.querySelector('.have-account');
-  buttonHaveAcc.addEventListener('click', () => {
-    console.log('di click:', buttonHaveAcc);
-    onNavigate('/');
+  const buttonHaveAcc = signUpContainer.querySelector(".have-account");
+  buttonHaveAcc.addEventListener("click", () => {
+    // console.log('di click:', buttonHaveAcc);
+    onNavigate("/");
   });
 
   //BUTTON SIGN UP -ONCLICK => CREATEUSERMAILPSS (FIREBASE) -> ONNAVIGATE(FEED);
-  const buttonSignUp = signUpContainer.querySelector('.button-signup');
-  buttonSignUp.addEventListener('click', async () => {
-    if(signUpContainer.querySelector('.name').value!==""){
-    const name = signUpContainer.querySelector('.name').value;
-    const email = signUpContainer.querySelector('.email').value;
-    const password = signUpContainer.querySelector('.password').value;
-    const fbResponse = await createUser(email, password, name);
-    console.log('este es el user log', fbResponse.user.uid);
-    onNavigate('/feed');}else{alert('You must provide a Name')}
+  const buttonSignUp = signUpContainer.querySelector(".button-signup");
+  buttonSignUp.addEventListener("click", async () => {
+    if (signUpContainer.querySelector(".name").value !== "") {
+      const name = signUpContainer.querySelector(".name").value;
+      const email = signUpContainer.querySelector(".email").value;
+      const password = signUpContainer.querySelector(".password").value;
+
+      const fbResponse = await createUser(email, password, name);
+      // console.log('este es el user log', fbResponse.user.uid);
+      onNavigate("/feed");
+    } else {
+      alert("You must provide a Name");
+    }
     // console.log(`this is the uid created user: ${user.uid}`);
   });
-  
+
   return signUpContainer;
 };
 
