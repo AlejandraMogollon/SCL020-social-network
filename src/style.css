@@ -239,3 +239,11 @@ nav {
 body {
   background-color: black;
 }
+
+.fa-heart{
+  color: #ffff;
+}
+
+.fa-heart.like{
+  color: #ff9505;
+}

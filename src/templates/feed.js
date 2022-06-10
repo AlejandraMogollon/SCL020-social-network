@@ -73,7 +73,7 @@ const feed = async () => {
         docData.post
       } </textarea >
             <div class="icons-posted">
-              <img class="heart-icon" id=${docId} src="img/like-icon.png" alt="heart-icon">
+            <i class="fa fa-heart" id="like-${docId}"></i>
               <p class="likes-count">${docData.LikeCount}</p>
               <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
               <button class="cancel-edit-btn">Cancel</button>
@@ -112,7 +112,7 @@ const feed = async () => {
     });
 
     //Button Like
-    const btnLike = feedContainer.querySelectorAll('.heart-icon');
+    const btnLike = feedContainer.querySelectorAll('.fa-heart');
     let count = feedContainer.querySelector('.likes-count');
     btnLike.forEach((buttonLike) => {
       buttonLike.addEventListener('click', async (e) => {
@@ -121,12 +121,15 @@ const feed = async () => {
           idPostLike,
           auth.currentUser.uid
         );
+        const perro = feedContainer.querySelector(`#like-${idPostLike}`);
+        // perro.classList.toggle('like');
+        console.log(perro);
         if (!likeInteraction) {
-          buttonLike.src = 'img/liked-icon.png';
+          perro.classList.add('like');
           console.log('entre al if', buttonLike);
         } else {
           console.log('entre al else');
-          buttonLike.src = 'img/like-icon.png';
+          perro.classList.remove('like');
         }
       });
     });

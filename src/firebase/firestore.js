@@ -108,6 +108,7 @@ export const editPost = async (id, editPost) => {
 };
 
 export const likeStatus = async (postId, userUid) => {
+  postId = postId.replace('like-', '');
   const postInfo = await getPostById(postId);
   const arrUserLiked = postInfo.postData.UsersWhoLiked;
   console.log('Arrr', arrUserLiked);
