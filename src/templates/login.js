@@ -17,8 +17,6 @@ const login = () => {
                 <button id="login" class="log-in">Log In</button>
                 <a href="">Forgot Password?</a>
             </div>
-            <img src="https://source.unsplash.com/random/500x400" width="80px"alt="Random Image">
-            <div class="separation-div"> --- o --- </div>
             <button id="signInGoogle" class="sign-in-google"> <img src="img/logo-Google.png" alt="logo-Google"> Sign In with Google</button>
             <div class="registration">
                 <p> Don't have an account?  <button class="btnSignUp" id="btnSignUp"  >Sign Up here</button></p>
@@ -55,8 +53,6 @@ const login = () => {
     onNavigate('/signup');
     console.log('click signup lleva a la pag signup');
   });
-
-
 
   return loginContainer;
 };

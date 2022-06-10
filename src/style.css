@@ -22,7 +22,10 @@ p,
   display: flex;
   flex-direction: column;
   width: 60%;
-}
+  padding: 20px;
+  border-radius: 10px;
+  }
+
 input {
   padding: 3%;
   margin: 2% 0%;
@@ -50,12 +53,30 @@ a {
 
 .log-in,
 .post-btn,
-.button-signup {
+.button-signup,
+.confirm-edit-btn,
+.cancel-edit-btn {
   border: 0;
   color: white;
   background-color: #ff9505;
   padding: 5%;
   margin: 5%;
+  border-radius: 10px;
+}
+
+.cancel-edit-btn {
+  background-color: #111317;
+}
+
+.confirm-edit-btn,
+.cancel-edit-btn {
+  width: 60%;
+  visibility: hidden;
+}
+.sign-in-google {
+  color: #ff9505;
+  background-color: #111317;
+  padding: 1%;
   border-radius: 10px;
 }
 
@@ -108,8 +129,6 @@ nav {
 .icons-post-btn {
   display: flex;
   justify-content: space-between;
-
-  /* align-self: flex-end; */
 }
 .user-img-post {
   width: 40%;
@@ -163,10 +182,22 @@ nav {
 }
 .icons-posted {
   display: grid;
-  grid-template-columns: 0.1fr 0.1fr 0.1fr 1fr;
+  grid-template-columns: 0.1fr 0.1fr 0.1fr 1fr 1fr;
   align-items: center;
-  /* justify-items: center; */
+  justify-items: center;
 }
+
+.fa-edit{
+  color: white;
+}
+.fa-edit:hover{
+  color: #ff9505;
+}
+
+.likes-count {
+  padding: 0 0.4rem;
+}
+
 .comment-icon,
 .delete-icon {
   justify-self: end;
@@ -175,6 +206,7 @@ nav {
 
 .user-input {
   align-self: center;
+  box-shadow: 2px 2px 50px rgb(55, 55, 55);
 }
 
 .btnSignUp,
