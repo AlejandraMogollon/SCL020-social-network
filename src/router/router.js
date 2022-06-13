@@ -1,19 +1,21 @@
-import login from '../templates/login.js';
-import feed from '../templates/feed.js';
-import signUp from '../templates/signup.js';
+import login from "../templates/login.js";
+import feed from "../templates/feed.js";
+import signUp from "../templates/signup.js";
+import profile from "../templates/profile.js";
 
 const routes = {
   // path: '/'
   // template:home()
-  '/': login(),
-  '/feed': await feed(),
-  '/signup': signUp(),
+  "/": login(),
+  "/feed": await feed(),
+  "/signup": signUp(),
+  "/profile": profile(),
 };
 
 const onNavigate = (pathname) => {
-  let rootDiv = document.getElementById('root');
+  let rootDiv = document.getElementById("root");
 
-  window.history.pushState({}, pathname, window.location.origin + pathname);
+  window.history.pushState(null, null, window.location.origin + pathname);
   rootDiv.innerHTML = null;
   rootDiv.appendChild(routes[pathname]);
 };

@@ -6,6 +6,7 @@ import {
   getRedirectResult,
   signOut,
   signInWithRedirect,
+  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
 import {
   collection,
@@ -108,3 +109,22 @@ export const logOut = async (auth) => {
       console.log(error, "An error happened.");
     });
 };
+
+//CURRENT PARA FILTRADO??
+// export const currentUserApp = async (auth) => {
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       // User is signed in, see docs for a list of available properties
+//       // https://firebase.google.com/docs/reference/js/firebase.User
+//       const uid = user.uid;
+//       console.log(uid);
+
+//       return uid; // ...
+//     } else {
+//       // User is signed out
+//       // ...
+//     }
+//   });
+// };
+// currentUserApp(auth);
+// console.log(currentUserApp(auth));

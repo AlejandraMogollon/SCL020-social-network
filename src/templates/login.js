@@ -1,7 +1,7 @@
-import { onNavigate } from '../router/router.js';
-import { provider, auth } from '../firebase/init.js';
+import { onNavigate } from "../router/router.js";
+import { provider, auth } from "../firebase/init.js";
 
-import { googleLog, userLogIn } from '../firebase/auth.js';
+import { googleLog, userLogIn } from "../firebase/auth.js";
 const login = () => {
   const templateLogin = `
         <section>
@@ -25,33 +25,33 @@ const login = () => {
         </section> `;
 
   //= TEMPLATE LOGIN A LOGINCONTAINER (DIV) =//
-  const loginContainer = document.createElement('div');
+  const loginContainer = document.createElement("div");
   loginContainer.innerHTML = templateLogin;
   //======== BOTON LOGIN - ONCLICK => SYNC - SIGNINMAILPSS (FIREBASE) -> ONNAVIGATE(FEED)
-  const login = loginContainer.querySelector('.log-in');
-  login.addEventListener('click', async () => {
-    const email = loginContainer.querySelector('.email').value;
-    const password = loginContainer.querySelector('.password').value;
+  const login = loginContainer.querySelector(".log-in");
+  login.addEventListener("click", async () => {
+    const email = loginContainer.querySelector(".email").value;
+    const password = loginContainer.querySelector(".password").value;
 
     const userLoged = await userLogIn(email, password);
-    console.log('aqui es el userlog:', userLoged);
-    onNavigate('/feed');
-    console.log('click login lleva a feed');
+    console.log("aqui es el userlog:", userLoged);
+    onNavigate("/feed");
+    console.log("click login lleva a feed");
   });
   //========FORGOT PASSWORD??'PASSWORD_RESET' ========//
 
   //========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======
-  const signInGoogle = loginContainer.querySelector('.sign-in-google');
-  signInGoogle.addEventListener('click', async () => {
+  const signInGoogle = loginContainer.querySelector(".sign-in-google");
+  signInGoogle.addEventListener("click", async () => {
     const googleUser = await googleLog(auth, provider); //retorna una promesa
-    onNavigate('/feed');
+    onNavigate("/feed");
   });
 
   //======== BOTON SIGN UP - ONCLICK => ONNAVIGATE(SIGNUP)//========
-  const signUpBtn = loginContainer.querySelector('.btnSignUp');
-  signUpBtn.addEventListener('click', () => {
-    onNavigate('/signup');
-    console.log('click signup lleva a la pag signup');
+  const signUpBtn = loginContainer.querySelector(".btnSignUp");
+  signUpBtn.addEventListener("click", () => {
+    onNavigate("/signup");
+    console.log("click signup lleva a la pag signup");
   });
 
   return loginContainer;
