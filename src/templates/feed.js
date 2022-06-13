@@ -18,12 +18,11 @@ const feed = async () => {
     <nav>
       <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
-      <button class="btnLogOut"> Log out</button>
       <img src="img/search-icon.png" alt=""/>
       <img id= "btnUser" src="img/user-icon.png" alt="" >
     </nav>
   </header>
-  <section>
+  <section class="section-feed">
     <main class="feed">
       <div class="post">
         <div class="img-text-area">
@@ -37,9 +36,11 @@ const feed = async () => {
       </div>
       <div class="root-post"> </div>
     </main>
-  </section> `;
+  </section>
+  <footer> FOOTER </footer> `;
   //TEMPLATE FEED A FEEDCONTAINER (DIV)
   const feedContainer = document.createElement("div");
+  feedContainer.className = "feed-container";
   feedContainer.innerHTML = templateFeed;
 
   const btnUser = feedContainer.querySelector("#btnUser");
@@ -48,11 +49,11 @@ const feed = async () => {
     onNavigate("/profile");
   });
   //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
-  const btnLogOut = feedContainer.querySelector(".btnLogOut");
-  btnLogOut.addEventListener("click", async () => {
-    await logOut(auth);
-    onNavigate("/");
-  });
+  // const btnLogOut = feedContainer.querySelector(".btnLogOut");
+  // btnLogOut.addEventListener("click", async () => {
+  //   await logOut(auth);
+  //   onNavigate("/");
+  // });
 
   //BOTON POST
   const btnPost = feedContainer.querySelector(".post-btn");
