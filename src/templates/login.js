@@ -4,28 +4,25 @@ import { provider, auth } from "../firebase/init.js";
 import { googleLog, userLogIn } from "../firebase/auth.js";
 const login = () => {
   const templateLogin = `
-        <section>
             <main class="home">
-            <div class="logo">
-                <img src="img/logo-Mediary.png" alt="logo-mediary">
-            </div>
-            <p class="welcome"> Mediary your space to share about books and its movie adaptations</p>
-            <p class="input-text-intro"> Enter your email and password to Sign In</p>
-            <div class="user-input">
+              <img class= "logo-login" src="img/logo-Mediary.png" alt="logo-mediary">
+              <p class="welcome"> Mediary your space to share about books and its movie adaptations</p>
+              <div class="user-input">
+                <p class="input-text-intro"> Enter email and password to sign In</p>
                 <input class="email" type="text" value="" placeholder="email ">
                 <input class="password" type="password" value="" placeholder="password ">
                 <button id="login" class="log-in">Log In</button>
                 <a href="">Forgot Password?</a>
-            </div>
-            <button id="signInGoogle" class="sign-in-google"> <img src="img/logo-Google.png" alt="logo-Google"> Sign In with Google</button>
+              </div>
+              <button id="signInGoogle" class="sign-in-google"> <img class="logo-google" src="img/logo-Google.png" alt="logo-Google"> Sign In with Google</button>
             <div class="registration">
                 <p> Don't have an account?  <button class="btnSignUp" id="btnSignUp"  >Sign Up here</button></p>
             </div>      
-            </main>
-        </section> `;
+            </main> `;
 
   //= TEMPLATE LOGIN A LOGINCONTAINER (DIV) =//
   const loginContainer = document.createElement("div");
+  loginContainer.className = "login-container";
   loginContainer.innerHTML = templateLogin;
   //======== BOTON LOGIN - ONCLICK => SYNC - SIGNINMAILPSS (FIREBASE) -> ONNAVIGATE(FEED)
   const login = loginContainer.querySelector(".log-in");

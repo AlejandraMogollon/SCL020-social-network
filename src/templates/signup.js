@@ -3,11 +3,8 @@ import { onNavigate } from "../router/router.js";
 
 const signUp = () => {
   const templateSignUp = `
- <section>
-    <main class="main-signup">
-      <div class="logo">
+    <main class="signup">
         <img src="img/logo-Mediary.png" alt="logo-mediary">
-      </div>
       <p class="p-signup-msge"> Create an account to start sharing</p>
       <div class="user-input">
         <input class="name" type="text" value="" placeholder="name" required>
@@ -16,11 +13,11 @@ const signUp = () => {
         <button class="button-signup">Sign Up</button>
         <button class="have-account">Already have an account?</button>
       </div> 
-    </main>
-  </section> `;
+    </main>`;
 
   //TEMPLATE SIGNUP A SIGNUPCONTAINER (DIV)
   const signUpContainer = document.createElement("div");
+  signUpContainer.className = "signup-container";
   signUpContainer.innerHTML = templateSignUp;
 
   //BUTTON ALREADY HAVE AN ACCOUNT -ONCLICK => -> ONNAVIGATE(LOGIN);
