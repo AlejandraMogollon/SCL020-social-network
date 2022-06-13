@@ -1,5 +1,5 @@
-import { onNavigate } from '../router/router.js';
-import { auth } from '../firebase/init.js';
+import { onNavigate } from "../router/router.js";
+import { auth } from "../firebase/init.js";
 import {
   createData,
   deletePost,
@@ -8,18 +8,19 @@ import {
   readPost,
   editPost,
   likeStatus,
-} from '../firebase/firestore.js';
-import { logOut } from '../firebase/auth.js';
+} from "../firebase/firestore.js";
+import { logOut } from "../firebase/auth.js";
 
 const feed = async () => {
+  console.log("holahola");
   const templateFeed = ` 
   <header>
     <nav>
       <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
       <button class="btnLogOut"> Log out</button>
-      <img src="img/search-icon.png" alt="">
-      <img src="img/user-icon.png" alt="">
+      <img src="img/search-icon.png" alt=""/>
+      <img id= "btnUser" src="img/user-icon.png" alt="" >
     </nav>
   </header>
   <section>
@@ -38,29 +39,38 @@ const feed = async () => {
     </main>
   </section> `;
   //TEMPLATE FEED A FEEDCONTAINER (DIV)
-  const feedContainer = document.createElement('div');
+  const feedContainer = document.createElement("div");
   feedContainer.innerHTML = templateFeed;
 
+  const btnUser = feedContainer.querySelector("#btnUser");
+  btnUser.addEventListener("click", () => {
+    console.log(btnUser);
+    onNavigate("/profile");
+  });
   //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
-  const btnLogOut = feedContainer.querySelector('.btnLogOut');
-  btnLogOut.addEventListener('click', async () => {
+  const btnLogOut = feedContainer.querySelector(".btnLogOut");
+  btnLogOut.addEventListener("click", async () => {
     await logOut(auth);
-    onNavigate('/');
+    onNavigate("/");
   });
 
   //BOTON POST
-  const btnPost = feedContainer.querySelector('.post-btn');
-  let rootFeed = feedContainer.querySelector('.root-post');
+  const btnPost = feedContainer.querySelector(".post-btn");
+  let rootFeed = feedContainer.querySelector(".root-post");
 
   const renderTemplateFeed = (post) => {
-    rootFeed.innerHTML = '';
-    let postList = '';
+    rootFeed.innerHTML = "";
+    let postList = "";
     post.forEach(async (doc) => {
       let docData = doc.data;
       let docId = doc.id;
+      let likeHtml = `<i class="fa fa-heart" id=${docId}></i>`;
+      if (docData.UsersWhoLiked.includes(auth.currentUser.uid)) {
+        likeHtml = `<i class="fa fa-heart like" id=${docId}></i>`;
+      }
       // console.log(docId);
       // console.log(docData);
-      postList += `
+      postList += ` 
       <div class="interaction-posted">
         <div class="posted-header">
           <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
@@ -69,93 +79,73 @@ const feed = async () => {
           <i class="far fa-edit" id=${docId} ></i>
         </div>
         <p class="post-date" >${docData.date.toDate().toLocaleString()}</p> 
-        <textarea  id=${docId}  class="posted-text" disabled=true> ${
+        <textarea  id="text-${docId}"  class="posted-text" disabled="true"> ${
         docData.post
-      } </textarea >
+      } </textarea>
             <div class="icons-posted">
-            <i class="fa fa-heart" id="like-${docId}"></i>
+            ${likeHtml}
               <p class="likes-count">${docData.LikeCount}</p>
               <img class="comment-icon"src="img/comment-icon.png" alt="comment-icon">
-              <button class="cancel-edit-btn">Cancel</button>
-              <button id="${docId}" class="confirm-edit-btn">Save</button>
+              <button id="cancel-${docId}" class="cancel-edit-btn">Cancel</button>
+              <button id="confirm-${docId}" class="confirm-edit-btn">Save</button>
             </div>
           </div>`;
     });
     rootFeed.innerHTML = postList;
-    const btnsEdit = feedContainer.querySelectorAll('.fa-edit');
+    const btnsEdit = feedContainer.querySelectorAll(".fa-edit");
 
     btnsEdit.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        let textArea = feedContainer.querySelector('.posted-text');
-
-        console.log(textArea.value);
-        let btnConfirmEdit = feedContainer.querySelector('.confirm-edit-btn');
-        let btnCancelEdit = feedContainer.querySelector('.cancel-edit-btn');
+      btn.addEventListener("click", () => {
+        let textArea = feedContainer.querySelector(`#text-${btn.id}`);
+        let btnConfirmEdit = feedContainer.querySelector(`#confirm-${btn.id}`);
+        let btnCancelEdit = feedContainer.querySelector(`#cancel-${btn.id}`);
         textArea.disabled = false;
-        textArea.style.border = 'solid 2px white';
-        btnCancelEdit.style.visibility = 'visible';
-        btnConfirmEdit.style.visibility = 'visible';
-
-        btnCancelEdit.addEventListener('click', () => {
-          btnCancelEdit.style.visibility = 'hidden';
-          btnConfirmEdit.style.visibility = 'hidden';
+        btnCancelEdit.classList.add("visible");
+        btnConfirmEdit.classList.add("visible");
+        btnCancelEdit.addEventListener("click", () => {
           textArea.disabled = true;
-          textArea.style.border = 'none';
+          btnCancelEdit.classList.remove("visible");
+          btnConfirmEdit.classList.remove("visible");
         });
 
-        btnConfirmEdit.addEventListener('click', async () => {
-          await editPost(btnConfirmEdit.id, textArea.value);
+        btnConfirmEdit.addEventListener("click", async () => {
+          await editPost(btn.id, textArea.value);
           console.log(btnConfirmEdit.id.length);
-          console.log('confirm edit clicked');
+          console.log("confirm edit clicked");
         });
       });
     });
 
     //Button Like
-    const btnLike = feedContainer.querySelectorAll('.fa-heart');
-    let count = feedContainer.querySelector('.likes-count');
+    const btnLike = feedContainer.querySelectorAll(".fa-heart");
+    let count = feedContainer.querySelector(".likes-count");
     btnLike.forEach((buttonLike) => {
-      buttonLike.addEventListener('click', async (e) => {
+      buttonLike.addEventListener("click", async (e) => {
         const idPostLike = e.target.id;
         const likeInteraction = await likeStatus(
           idPostLike,
           auth.currentUser.uid
         );
-        const perro = feedContainer.querySelector(`#like-${idPostLike}`);
-        // perro.classList.toggle('like');
-        console.log(perro);
-        if (!likeInteraction) {
-          perro.classList.add('like');
-          console.log('entre al if', buttonLike);
-        } else {
-          console.log('entre al else');
-          perro.classList.remove('like');
-        }
       });
     });
 
-    const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+    const btnDelete = feedContainer.querySelectorAll(".delete-icon");
     btnDelete.forEach((btn) => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener("click", async () => {
         console.log(btn.id);
-        // let id = e.target.id;
-        const deleteAlert = confirm('Are you sure you want delete this post?');
+        const deleteAlert = confirm("Are you sure you want delete this post?");
         if (deleteAlert === true) {
           await deletePost(btn.id);
           readPost(renderTemplateFeed);
         }
-        //   window.location.reload();
-        // } else {
-        //   alert("Your post was not eliminated!!");
-        // }
       });
     });
   };
 
   readPost(renderTemplateFeed);
 
-  btnPost.addEventListener('click', async () => {
-    const textPost = feedContainer.querySelector('.text-post');
+  btnPost.addEventListener("click", async () => {
+    const textPost = feedContainer.querySelector(".text-post");
     const userData = await getUserData(auth.currentUser.uid);
     const postId = await createData(
       userData.id,
@@ -164,28 +154,20 @@ const feed = async () => {
       userData.nick
     );
     console.log(postId);
-    const subRoot = document.createElement('div');
-    subRoot.className = 'interaction-posted';
+    const subRoot = document.createElement("div");
+    subRoot.className = "interaction-posted";
     // subRoot.innerHTML = await templateCreatedLastPost(
     //   userData.nick,
     //   postId,
     //   textPost.value
     // );
 
-    textPost.value = '';
+    textPost.value = "";
 
-    const btnLike = feedContainer.querySelectorAll('.heart-icon');
-    btnLike.forEach((btn) => {
-      btn.addEventListener('click', function () {
-        console.log(this);
-        this.src = 'img/liked-icon.png';
-      });
-    });
-
-    const btnComment = feedContainer.querySelectorAll('.comment-icon');
+    const btnComment = feedContainer.querySelectorAll(".comment-icon");
     btnComment.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        console.log('comment-icon clicked');
+      btn.addEventListener("click", () => {
+        console.log("comment-icon clicked");
       });
     });
   });
