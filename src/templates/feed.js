@@ -1,5 +1,5 @@
-import { onNavigate } from "../router/router.js";
-import { auth } from "../firebase/init.js";
+import { onNavigate } from '../router/router.js';
+import { auth } from '../firebase/init.js';
 import {
   createData,
   deletePost,
@@ -8,11 +8,11 @@ import {
   readPost,
   editPost,
   likeStatus,
-} from "../firebase/firestore.js";
-import { logOut } from "../firebase/auth.js";
+} from '../firebase/firestore.js';
+import { logOut } from '../firebase/auth.js';
 
 const feed = async () => {
-  console.log("holahola");
+  console.log('holahola');
   const templateFeed = ` 
   <header>
     <nav>
@@ -39,14 +39,14 @@ const feed = async () => {
   </section>
   <footer> FOOTER </footer> `;
   //TEMPLATE FEED A FEEDCONTAINER (DIV)
-  const feedContainer = document.createElement("div");
-  feedContainer.className = "feed-container";
+  const feedContainer = document.createElement('div');
+  feedContainer.className = 'feed-container';
   feedContainer.innerHTML = templateFeed;
 
-  const btnUser = feedContainer.querySelector("#btnUser");
-  btnUser.addEventListener("click", () => {
+  const btnUser = feedContainer.querySelector('#btnUser');
+  btnUser.addEventListener('click', () => {
     console.log(btnUser);
-    onNavigate("/profile");
+    onNavigate('/profile');
   });
   //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
   // const btnLogOut = feedContainer.querySelector(".btnLogOut");
@@ -56,12 +56,12 @@ const feed = async () => {
   // });
 
   //BOTON POST
-  const btnPost = feedContainer.querySelector(".post-btn");
-  let rootFeed = feedContainer.querySelector(".root-post");
+  const btnPost = feedContainer.querySelector('.post-btn');
+  let rootFeed = feedContainer.querySelector('.root-post');
 
   const renderTemplateFeed = (post) => {
-    rootFeed.innerHTML = "";
-    let postList = "";
+    rootFeed.innerHTML = '';
+    let postList = '';
     post.forEach(async (doc) => {
       let docData = doc.data;
       let docId = doc.id;
@@ -76,6 +76,7 @@ const feed = async () => {
         <div class="posted-header">
           <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
           <p class="user-name"> ${docData.nick}  </p>
+          <p></p>
           <img class="delete-icon"src="img/delete-icon.png" id=${docId} alt="delete-icon">
           <i class="far fa-edit" id=${docId} ></i>
         </div>
@@ -93,35 +94,35 @@ const feed = async () => {
           </div>`;
     });
     rootFeed.innerHTML = postList;
-    const btnsEdit = feedContainer.querySelectorAll(".fa-edit");
+    const btnsEdit = feedContainer.querySelectorAll('.fa-edit');
 
     btnsEdit.forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener('click', () => {
         let textArea = feedContainer.querySelector(`#text-${btn.id}`);
         let btnConfirmEdit = feedContainer.querySelector(`#confirm-${btn.id}`);
         let btnCancelEdit = feedContainer.querySelector(`#cancel-${btn.id}`);
         textArea.disabled = false;
-        btnCancelEdit.classList.add("visible");
-        btnConfirmEdit.classList.add("visible");
-        btnCancelEdit.addEventListener("click", () => {
+        btnCancelEdit.classList.add('visible');
+        btnConfirmEdit.classList.add('visible');
+        btnCancelEdit.addEventListener('click', () => {
           textArea.disabled = true;
-          btnCancelEdit.classList.remove("visible");
-          btnConfirmEdit.classList.remove("visible");
+          btnCancelEdit.classList.remove('visible');
+          btnConfirmEdit.classList.remove('visible');
         });
 
-        btnConfirmEdit.addEventListener("click", async () => {
+        btnConfirmEdit.addEventListener('click', async () => {
           await editPost(btn.id, textArea.value);
           console.log(btnConfirmEdit.id.length);
-          console.log("confirm edit clicked");
+          console.log('confirm edit clicked');
         });
       });
     });
 
     //Button Like
-    const btnLike = feedContainer.querySelectorAll(".fa-heart");
-    let count = feedContainer.querySelector(".likes-count");
+    const btnLike = feedContainer.querySelectorAll('.fa-heart');
+    let count = feedContainer.querySelector('.likes-count');
     btnLike.forEach((buttonLike) => {
-      buttonLike.addEventListener("click", async (e) => {
+      buttonLike.addEventListener('click', async (e) => {
         const idPostLike = e.target.id;
         const likeInteraction = await likeStatus(
           idPostLike,
@@ -130,11 +131,11 @@ const feed = async () => {
       });
     });
 
-    const btnDelete = feedContainer.querySelectorAll(".delete-icon");
+    const btnDelete = feedContainer.querySelectorAll('.delete-icon');
     btnDelete.forEach((btn) => {
-      btn.addEventListener("click", async () => {
+      btn.addEventListener('click', async () => {
         console.log(btn.id);
-        const deleteAlert = confirm("Are you sure you want delete this post?");
+        const deleteAlert = confirm('Are you sure you want delete this post?');
         if (deleteAlert === true) {
           await deletePost(btn.id);
           readPost(renderTemplateFeed);
@@ -145,8 +146,8 @@ const feed = async () => {
 
   readPost(renderTemplateFeed);
 
-  btnPost.addEventListener("click", async () => {
-    const textPost = feedContainer.querySelector(".text-post");
+  btnPost.addEventListener('click', async () => {
+    const textPost = feedContainer.querySelector('.text-post');
     const userData = await getUserData(auth.currentUser.uid);
     const postId = await createData(
       userData.id,
@@ -155,20 +156,20 @@ const feed = async () => {
       userData.nick
     );
     console.log(postId);
-    const subRoot = document.createElement("div");
-    subRoot.className = "interaction-posted";
+    const subRoot = document.createElement('div');
+    subRoot.className = 'interaction-posted';
     // subRoot.innerHTML = await templateCreatedLastPost(
     //   userData.nick,
     //   postId,
     //   textPost.value
     // );
 
-    textPost.value = "";
+    textPost.value = '';
 
-    const btnComment = feedContainer.querySelectorAll(".comment-icon");
+    const btnComment = feedContainer.querySelectorAll('.comment-icon');
     btnComment.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        console.log("comment-icon clicked");
+      btn.addEventListener('click', () => {
+        console.log('comment-icon clicked');
       });
     });
   });

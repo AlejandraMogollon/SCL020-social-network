@@ -102,7 +102,7 @@ nav {
   height: 10vh;
 }
 .logo-mediary-nav {
-  width: 60%;
+  width: 4vw;
 }
 .section-feed {
   width: 100%;
@@ -127,8 +127,12 @@ footer {
   border-radius: 10px;
 }
 .post-btn {
-  padding: 2% 8%;
+  padding: 2% 5%;
   margin: 0;
+  width: auto;
+  height: 45px;
+  line-height: 1.5;
+
 }
 .cancel-edit-btn {
   background-color: #111317;
@@ -147,14 +151,18 @@ footer {
 
 .interaction-posted,
 .post-area {
+  outline: 2px solid rgb(81, 255, 0);
   display: flex;
   background-color: #242731;
   padding: 3%;
   border-radius: 16px;
   flex-direction: column;
-  width: 95%;
+  width: 90%;
+  height: 60%;
   margin: 2% 3%;
+  
 }
+
 
 .post {
   outline: 2px solid blue;
@@ -170,10 +178,15 @@ footer {
   margin: 10%;
 } */
 
+
 .img-text-area {
   display: flex;
   width: 100%;
   height: 60%;
+}
+
+.user-img-post{
+  width: auto; 
 }
 
 .icons-post-btn {
@@ -200,9 +213,10 @@ footer {
   align-self: flex-start;
 }
 .post-date {
-  font-size: 16px;
+  font-size: 10px;
   color: #ff9505;
-  padding: 0%;
+  padding: 2%;
+  margin-left: 17%;
 }
 .posted-header {
   display: grid;
@@ -281,6 +295,7 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
+  
   /* scrollbar-color: red; */
   /* scrollbar-width: thin; */
 }
@@ -318,6 +333,10 @@ main {
   width: 50vw;
 } */
 
+
+/* -------------------- MEDIA-----------------------------------------*/
+
+
 @media (max-width: 800px) {
   body {
     background-color: black;
@@ -340,9 +359,86 @@ main {
     height: 88vh;
   }
 
+  .root-post {
+    height: auto;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+  
+    /* scrollbar-color: red; */
+    /* scrollbar-width: thin; */
+  }
+
+  .interaction-posted,
+.post-area {
+  outline: 2px solid rgb(81, 255, 0);
+  display: flex;
+  background-color: #242731;
+  padding: 3%;
+  border-radius: 16px;
+  flex-direction: column;
+  width: 90%;
+  height: 60%;
+  margin: 2% 3%;
+}
+
+.post-area {
+  
+  padding: 3%;
+  margin: 2% 3%;
+}
+
+
+.post-btn{
+  border: 0;
+  color: white;
+  background-color: #ff9505;
+  margin: 5%;
+  border-radius: 10px;
+  width: auto;
+  height: 30px;
+  line-height: 1.5;
+  
+  
+}
+
+
+
+
+.post {
+  outline: 2px solid blue;
+  width: 80%;
+  height: 20%;
+  padding: 0;
+  background-color: #242731;
+  border-radius: 16px;
+  padding: 1%;
+  margin: 1%;
+}
+
+.img-text-area {
+  display: flex;
+  width: 100%;
+  height: 60%;
+  padding: 3%;
+}
+
+.user-img-post{
+  width: auto; 
+  
+}
+  
+
   nav {
     height: 6vh;
   }
+
+  .logo-mediary-nav {
+    width: 60%;
+  }
+
   footer {
     width: 100vw;
     height: 6vh;
