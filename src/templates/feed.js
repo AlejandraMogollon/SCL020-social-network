@@ -23,11 +23,21 @@ const feed = async () => {
     </nav>
   </header>
   <section class="section-feed">
+  <div class="div1"> 
+  <p class="best"> Book </p>
+    <div class="pic-ctn">
+    <img src="https://picsum.photos/200/300?t=1" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=2" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=3" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=4" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=5" alt="" class="pic">
+  </div>
+   </div>
     <main class="feed">
       <div class="post">
         <div class="img-text-area">
           <img class="user-img-post" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="">
-          <textarea class="text-post" rows="4" cols="150" placeholder="What's Happening"></textarea>
+          <textarea class="text-post" rows="4" cols="150" placeholder="What's Happening" ></textarea>
         </div>
         <div class="icons-post-btn">
           <img class="post-icon-image" src="img/post-icon-image.png" alt="">
@@ -36,8 +46,22 @@ const feed = async () => {
       </div>
       <div class="root-post"> </div>
     </main>
+    <div class="div1"> 
+  <p class="best"> Adaptation </p>
+    <div class="pic-ctn">
+    <img src="https://picsum.photos/200/300?t=1" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=2" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=3" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=4" alt="" class="pic">
+    <img src="https://picsum.photos/200/300?t=5" alt="" class="pic">
+  </div>
+   </div>
   </section>
-  <footer> FOOTER </footer> `;
+  <footer> 
+  <p> © 2022 Mediary, Inc. </p>
+  <img class="link-logo"src="img/link-logo.png" alt="">
+  
+  </footer> `;
   //TEMPLATE FEED A FEEDCONTAINER (DIV)
   const feedContainer = document.createElement('div');
   feedContainer.className = 'feed-container';
@@ -102,10 +126,12 @@ const feed = async () => {
         let btnConfirmEdit = feedContainer.querySelector(`#confirm-${btn.id}`);
         let btnCancelEdit = feedContainer.querySelector(`#cancel-${btn.id}`);
         textArea.disabled = false;
+        textArea.style.border = '2px solid white';
         btnCancelEdit.classList.add('visible');
         btnConfirmEdit.classList.add('visible');
         btnCancelEdit.addEventListener('click', () => {
           textArea.disabled = true;
+          textArea.style.border = 'none';
           btnCancelEdit.classList.remove('visible');
           btnConfirmEdit.classList.remove('visible');
         });
@@ -149,22 +175,26 @@ const feed = async () => {
   btnPost.addEventListener('click', async () => {
     const textPost = feedContainer.querySelector('.text-post');
     const userData = await getUserData(auth.currentUser.uid);
-    const postId = await createData(
-      userData.id,
-      textPost.value,
-      userData.mail,
-      userData.nick
-    );
-    console.log(postId);
-    const subRoot = document.createElement('div');
-    subRoot.className = 'interaction-posted';
-    // subRoot.innerHTML = await templateCreatedLastPost(
-    //   userData.nick,
-    //   postId,
-    //   textPost.value
-    // );
+    if (textPost.value !== '') {
+      const postId = await createData(
+        userData.id,
+        textPost.value,
+        userData.mail,
+        userData.nick
+      );
+      console.log(postId);
+      const subRoot = document.createElement('div');
+      subRoot.className = 'interaction-posted';
+      // subRoot.innerHTML = await templateCreatedLastPost(
+      //   userData.nick,
+      //   postId,
+      //   textPost.value
+      // );
 
-    textPost.value = '';
+      textPost.value = '';
+    } else {
+      alert('You need a message');
+    }
 
     const btnComment = feedContainer.querySelectorAll('.comment-icon');
     btnComment.forEach((btn) => {
