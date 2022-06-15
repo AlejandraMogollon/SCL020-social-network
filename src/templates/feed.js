@@ -18,7 +18,7 @@ const feed = async () => {
     <nav>
       <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
-      <img src="img/search-icon.png" alt=""/>
+      <img id="btnSearch" src="img/search-icon.png" alt=""/>
       <img id= "btnUser" src="img/user-icon.png" alt="" >
     </nav>
   </header>
@@ -26,11 +26,12 @@ const feed = async () => {
   <div class="div1"> 
   <p class="best"> Book </p>
     <div class="pic-ctn">
-    <img src="https://picsum.photos/200/300?t=1" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=2" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=3" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=4" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=5" alt="" class="pic">
+    <img src="img/Heartstopper.jpg" alt="" class="pic">
+    <img src="img/DeathOnTheNile.jpg" alt="" class="pic">
+    <img src="img/Dune.jpg" alt="" class="pic">
+    <img src="img/FrenchExit.png" alt="" class="pic">
+    <img src="img/TheBoys.jpg" alt="" class="pic">
+    <button class="review">Review</button>
   </div>
    </div>
     <main class="feed">
@@ -49,11 +50,12 @@ const feed = async () => {
     <div class="div1"> 
   <p class="best"> Adaptation </p>
     <div class="pic-ctn">
-    <img src="https://picsum.photos/200/300?t=1" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=2" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=3" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=4" alt="" class="pic">
-    <img src="https://picsum.photos/200/300?t=5" alt="" class="pic">
+    <img src="img/HeartstopperAd.jpg" alt="" class="pic">
+    <img src="img/DeathOnTheNileAd.jpg" alt="" class="pic">
+    <img src="img/DuneAd.jpg" alt="" class="pic">
+    <img src="img/FrenchExitAd.png" alt="" class="pic">
+    <img src="img/TheBoysAd.jpg" alt="" class="pic">
+    <button class="review">Review</button>
   </div>
    </div>
   </section>
@@ -71,6 +73,11 @@ const feed = async () => {
   btnUser.addEventListener('click', () => {
     console.log(btnUser);
     onNavigate('/profile');
+  });
+   const btnSearch = feedContainer.querySelector('#btnSearch');
+  btnSearch.addEventListener('click', () => {
+    console.log("btn search");
+    onNavigate('/search');
   });
   //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
   // const btnLogOut = feedContainer.querySelector(".btnLogOut");
