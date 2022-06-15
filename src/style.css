@@ -90,7 +90,6 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 80vh;
   width: 100vw;
 }
@@ -105,12 +104,16 @@ nav {
   width: 4vw;
 }
 .section-feed {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
   width: 100%;
-  outline: solid 2px red;
+ 
 }
 footer {
+  display: flex;
   height: 10vh;
-  width: 100vh;
+  width: 100vw;
   color: white;
 }
 
@@ -151,22 +154,23 @@ footer {
 
 .interaction-posted,
 .post-area {
-  outline: 2px solid rgb(81, 255, 0);
+  
   display: flex;
   background-color: #242731;
   padding: 3%;
   border-radius: 16px;
   flex-direction: column;
-  width: 90%;
-  height: 60%;
+  width: 460px;
+  height: 180px;
   margin: 2% 3%;
   
 }
 
 
 .post {
-  outline: 2px solid blue;
-  width: 45%;
+  
+  justify-self: start;
+  width: 60%;
   height: 20%;
   padding: 0;
   background-color: #242731;
@@ -290,15 +294,38 @@ footer {
 }
 .root-post {
   height: auto;
-  width: 45%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
+  align-items: center;
   
   /* scrollbar-color: red; */
   /* scrollbar-width: thin; */
 }
+ /* ----------scrollbar------ */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #040404;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 0, 0);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 0, 0);
+}
+/* ----------scrollbar------ */
+
 body {
   background-color: black;
 }
@@ -309,6 +336,20 @@ body {
 
 .fa-heart.like {
   color: #ff9505;
+}
+
+footer{
+  display: table;
+  font-size: small;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.link-logo{
+  margin: 1%;
+  width: 1%;
 }
 
 /* PROFILE */
@@ -334,6 +375,88 @@ main {
 } */
 
 
+
+
+/* -------------------- carusel-----------------------------------------*/
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.pic-ctn {
+  width: 100vw;
+  height: 200px;
+}
+
+@keyframes display {
+  0% {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(0);
+    opacity: 2;
+  }
+  20% {
+    transform: translateY(0);
+    opacity: 2;
+  }
+  30% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+.pic-ctn {
+  position: relative;
+  width: auto;
+  height: 100px;
+  margin-top: 15vh;
+}
+
+.pic-ctn > img {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 100px);
+  opacity: 0;
+  animation: display 10s infinite;
+}
+
+img:nth-child(2) {
+  animation-delay: 2s;
+}
+img:nth-child(3) {
+  animation-delay: 4s;
+}
+img:nth-child(4) {
+  animation-delay: 6s;
+}
+img:nth-child(5) {
+  animation-delay: 8s;
+}
+
+.div1{
+  background-color: #242731;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  width: 20vw;
+  height: 80vh;
+  margin: 0% 2%;
+  
+}
+
+.best{
+  margin-top: 20%;
+}
+
 /* -------------------- MEDIA-----------------------------------------*/
 
 
@@ -341,6 +464,10 @@ main {
   body {
     background-color: black;
   }
+
+.div1{
+  display: none;
+}
 
   .login-container,
   .signup-container {
@@ -357,6 +484,10 @@ main {
 
   .feed {
     height: 88vh;
+  }
+
+  .feed-container{
+    height: 10vh;
   }
 
   .root-post {
@@ -406,7 +537,6 @@ main {
 
 
 
-
 .post {
   outline: 2px solid blue;
   width: 80%;
@@ -429,19 +559,23 @@ main {
   width: auto; 
   
 }
-  
 
-  nav {
+nav {
     height: 6vh;
   }
 
-  .logo-mediary-nav {
+.logo-mediary-nav {
     width: 60%;
   }
 
-  footer {
+footer {
     width: 100vw;
-    height: 6vh;
+    height: 10vh;
+    margin: 1%;
+  }
+
+.link-logo{
+    width: 4%;
   }
   /* .interaction-posted{
     width
