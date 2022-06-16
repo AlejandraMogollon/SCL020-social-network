@@ -259,7 +259,7 @@ footer {
   height: 20%;
 }
 
-.fa-edit {
+.fa-edit, .fa-trash {
   color: white;
 }
 .fa-edit:hover {
@@ -274,11 +274,11 @@ footer {
 }
 
 .comment-icon,
-.delete-icon {
+.fa-trash {
   justify-self: end;
   margin-right: 5%;
 }
-.delete-icon:hover{
+.fa-trash:hover{
   color:#ff9505;
 }
 .btnSignUp,
