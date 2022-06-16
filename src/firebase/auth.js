@@ -7,6 +7,7 @@ import {
   signOut,
   signInWithRedirect,
   onAuthStateChanged,
+  signInWithPopup
 } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
 import {
   collection,
@@ -14,9 +15,10 @@ import {
   Timestamp,
   getDocs,
 } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js";
-import { auth } from "../firebase/init.js";
+import { auth,provider } from "../firebase/init.js";
 import { createData } from "../firebase/firestore.js";
 import { db } from "../firebase/init.js";
+import { onNavigate } from "../router/router.js";
 
 export const createUser = async (email, password, name) => {
   try {
@@ -89,42 +91,92 @@ export const userLogIn = async (email, password) => {
   }
 };
 
-//REVISAR - PROBLEMAS ONNAVIGATE, VUELVE A LOGIN EN VEZ DE FEED
-export const googleLog = async (auth, provider) => {
-  try {
-    const googleUser = await signInWithRedirect(auth, provider);
-    return googleUser;
-  } catch (error) {
-    console.log(`Error while logging with google: ${error.message}`);
-    throw error;
+ export const googleLog = async () => {
+  await signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      console.log(user.name)
+      
+      // ...
+      
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+
+ }
+
+export const redirectResult =  async (auth)=>{
+
+ await getRedirectResult(auth)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access Google APIs.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    console.log(user)
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+
+
+}
+
+export const listAuth = ()=>{
+// const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    console.log(user)
+    
+    // ...
+  } else {
+    // User is signed out
+    // ...
   }
-};
+});
+
+}
+console.log(auth)
+
+
+
+
+
+
+
+
+
 
 export const logOut = async (auth) => {
   signOut(auth)
     .then(() => {
+      onNavigate("/");
       console.log("Sign-out successful.");
     })
     .catch((error) => {
       console.log(error, "An error happened.");
     });
 };
-
-//CURRENT PARA FILTRADO??
-// export const currentUserApp = async (auth) => {
-//   onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//       // User is signed in, see docs for a list of available properties
-//       // https://firebase.google.com/docs/reference/js/firebase.User
-//       const uid = user.uid;
-//       console.log(uid);
-
-//       return uid; // ...
-//     } else {
-//       // User is signed out
-//       // ...
-//     }
-//   });
-// };
-// currentUserApp(auth);
-// console.log(currentUserApp(auth));

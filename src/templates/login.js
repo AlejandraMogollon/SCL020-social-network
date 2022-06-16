@@ -1,7 +1,7 @@
 import { onNavigate } from "../router/router.js";
 import { provider, auth } from "../firebase/init.js";
 
-import { googleLog, userLogIn } from "../firebase/auth.js";
+import { googleLog, redirectResult, userLogIn } from "../firebase/auth.js";
 const login = () => {
   const templateLogin = `
             <main class="home">
@@ -40,7 +40,8 @@ const login = () => {
   //========BOTON LOGIN GOOGLE - ONCLICK => SYNC - GOOGLE PROVIDER (FIREBASE) -> ONNAVIGATE(FEED)======
   const signInGoogle = loginContainer.querySelector(".sign-in-google");
   signInGoogle.addEventListener("click", async () => {
-    const googleUser = await googleLog(auth, provider); //retorna una promesa
+    const googleUser = await googleLog();
+    redirectResult(auth)
     onNavigate("/feed");
   });
 

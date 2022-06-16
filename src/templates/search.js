@@ -68,8 +68,7 @@ const searchContainer = document.createElement('div');
   searchContainer.innerHTML = templateSearch;
 
 const movieSearchBox = searchContainer.querySelector('#movie-search-box');
-const searchList = searchContainer.querySelector('.search-list');
-const resultGrid = searchContainer.querySelector('.result-grid');
+
 
 movieSearchBox.addEventListener("click",  ()=>{
      findMovies()
