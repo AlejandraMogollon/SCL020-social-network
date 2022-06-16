@@ -2,27 +2,40 @@ import { readPost } from "../firebase/firestore.js";
 import { onNavigate } from "../router/router.js";
 import { auth } from "../firebase/init.js";
 import { logOut } from "../firebase/auth.js";
+import { findMovies, getMovies, printMovies, loadMovies } from "../utility.js";
 const profile = () => {
   const templateUser = ` 
   <header>
     <nav>
-      <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
-      <img src="img/search-icon.png" alt=""/>
-      <img id= "btnUser" src="img/user-icon.png" alt="" >
+      <button class="btn-feed"> Go back to Feed </button>
     </nav>
   </header>
   <section  class="profile-section">
-    <main> 
-      <div class= "user-details"
-        <h1 class="user-name">User Name </h1>
-        <ul class="user-name">User Name </ul>
-              <button class="btn-log-out"> Log out</button>
-              <button class="btn-feed"> Feed </button>
-      </div>
-      <div id="rootProfile"> </div>
+    <main class="main-profile"> 
+      <div class="div-search">
+        <div class= "container-input-search">
+          <h3>Search Movie:</h3>
+          <input type = "text" class = "input-search" placeholder="Search Movie Title ..." id = "movie-search-box"  >
+          <img class="btnSearch" src="img/search-icon.png" alt=""/>
+        </div>
+      </div> 
+      <div class="root-post-profile" id="rootProfile"> </div>
+      <aside class= "user-details">
+      <h1>Profile Information</h1>
+        <div class="photo-profile">
+          <img class="user-img-post-profile" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="">
+        </div>  
+        <h1 class="user-data-name">User Name </h1>
+        <button class="btn-log-out">         <i class="fa-solid fa-right-from-bracket"></i>
+Log out</button>
+      </aside>
     </main>
   </section>
+  <footer> 
+    <p> © 2022 Mediary, Inc. </p>
+    <img class="link-logo"src="img/link-logo.png" alt="">
+  </footer> 
    `;
   const userContainer = document.createElement("div");
   userContainer.innerHTML = templateUser;
@@ -34,7 +47,7 @@ const profile = () => {
     post.forEach(async (doc) => {
       let docData = doc.data;
       let docId = doc.id;
-      console.log(docData);
+      // console.log(docData);
       // console.log(auth.currentUser.uid);
       postList += ` 
       <div class="interaction-posted">
@@ -71,6 +84,18 @@ const profile = () => {
   btnFeed.addEventListener("click", () => {
     onNavigate("/feed");
   });
+
+//----------------- search ---------------------//
+
+  const inputSearch = userContainer.querySelector(".input-search")
+  const rootSearch = userContainer.querySelector('div-search')
+  inputSearch.addEventListener('click',  ()=>{
+     findMovies(inputSearch)
+    
+  })
+
+
+
   return userContainer;
 };
 

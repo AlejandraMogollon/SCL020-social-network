@@ -155,6 +155,6 @@ export const readPost2 = async (callback) => {
 };
 
 readPost2((post) => {
-  console.log(post[0].data.user);
+  // console.log(post[0].data.user);
 });
 // FIN PRUEBAS FILTRADO

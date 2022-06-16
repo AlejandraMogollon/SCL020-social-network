@@ -31,7 +31,6 @@ const feed = async () => {
     <img src="img/Dune.jpg" alt="" class="pic">
     <img src="img/FrenchExit.png" alt="" class="pic">
     <img src="img/TheBoys.jpg" alt="" class="pic">
-    <button class="review">Review</button>
   </div>
    </div>
     <main class="feed">
@@ -55,7 +54,6 @@ const feed = async () => {
     <img src="img/DuneAd.jpg" alt="" class="pic">
     <img src="img/FrenchExitAd.png" alt="" class="pic">
     <img src="img/TheBoysAd.jpg" alt="" class="pic">
-    <button class="review">Review</button>
   </div>
    </div>
   </section>
@@ -91,6 +89,7 @@ const feed = async () => {
   let rootFeed = feedContainer.querySelector('.root-post');
 
   const renderTemplateFeed = (post) => {
+    if(!auth.currentUser)return
     rootFeed.innerHTML = '';
     let postList = '';
     post.forEach(async (doc) => {
@@ -127,8 +126,9 @@ const feed = async () => {
     rootFeed.innerHTML = postList;
     const btnsEdit = feedContainer.querySelectorAll('.fa-edit');
 
-    btnsEdit.forEach((btn) => {
+ btnsEdit.forEach((btn) => {
       btn.addEventListener('click', () => {
+        btn.classList.add('btnEditActive');
         let textArea = feedContainer.querySelector(`#text-${btn.id}`);
         let btnConfirmEdit = feedContainer.querySelector(`#confirm-${btn.id}`);
         let btnCancelEdit = feedContainer.querySelector(`#cancel-${btn.id}`);
@@ -139,8 +139,10 @@ const feed = async () => {
         btnCancelEdit.addEventListener('click', () => {
           textArea.disabled = true;
           textArea.style.border = 'none';
+          btn.classList.remove('btnEditActive');
           btnCancelEdit.classList.remove('visible');
           btnConfirmEdit.classList.remove('visible');
+          
         });
 
         btnConfirmEdit.addEventListener('click', async () => {
@@ -175,6 +177,7 @@ const feed = async () => {
         }
       });
     });
+  
   };
 
   readPost(renderTemplateFeed);
