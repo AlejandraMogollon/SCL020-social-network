@@ -107,8 +107,8 @@ const feed = async () => {
           <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
           <p class="user-name"> ${docData.nick}  </p>
           <p></p>
-          <img class="delete-icon"src="img/delete-icon.png" id=${docId} alt="delete-icon">
-          <i class="far fa-edit" id=${docId} ></i>
+          <i class="fa fa-trash" id=${docId} ></i>
+          <i class="fas fa-edit" id=${docId} ></i>
         </div>
         <p class="post-date" >${docData.date.toDate().toLocaleString()}</p> 
         <textarea  id="text-${docId}"  class="posted-text" disabled="true"> ${
@@ -166,7 +166,7 @@ const feed = async () => {
       });
     });
 
-    const btnDelete = feedContainer.querySelectorAll('.delete-icon');
+    const btnDelete = feedContainer.querySelectorAll('.fa-trash');
     btnDelete.forEach((btn) => {
       btn.addEventListener('click', async () => {
         console.log(btn.id);
