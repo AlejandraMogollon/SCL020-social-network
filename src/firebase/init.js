@@ -1,10 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js';
 import {
   GoogleAuthProvider,
   getAuth,
-} from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js";
-import config from "./config.js";
+} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
+import config from './config.js';
 
 const app = initializeApp(config);
 const auth = getAuth(app);
