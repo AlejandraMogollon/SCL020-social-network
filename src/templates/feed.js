@@ -12,14 +12,13 @@ import {
 import { logOut } from '../firebase/auth.js';
 
 const feed = async () => {
-  console.log('holahola');
   const templateFeed = ` 
   <header>
     <nav>
       <img src="img/menu-icon.png" alt="">
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
       <img id="btnSearch" src="img/search-icon.png" alt=""/>
-      <img id= "btnUser" src="img/user-icon.png" alt="" >
+      <img id="btnUser" class="btnUser" src="img/user-icon.png" alt="" >
     </nav>
   </header>
   <section class="section-feed">
@@ -62,19 +61,21 @@ const feed = async () => {
   <img class="link-logo"src="img/link-logo.png" alt="">
   
   </footer> `;
+
   //TEMPLATE FEED A FEEDCONTAINER (DIV)
   const feedContainer = document.createElement('div');
   feedContainer.className = 'feed-container';
   feedContainer.innerHTML = templateFeed;
 
-  const btnUser = feedContainer.querySelector('#btnUser');
+  const btnUser = feedContainer.querySelector('.btnUser');
   btnUser.addEventListener('click', () => {
-    console.log(btnUser);
+    const userNameProfile = auth.currentUser.uid;
+    console.log('dentro de boton', auth.currentUser.uid);
     onNavigate('/profile');
   });
-   const btnSearch = feedContainer.querySelector('#btnSearch');
+  const btnSearch = feedContainer.querySelector('#btnSearch');
   btnSearch.addEventListener('click', () => {
-    console.log("btn search");
+    console.log('btn search');
     onNavigate('/search');
   });
   //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
@@ -89,7 +90,7 @@ const feed = async () => {
   let rootFeed = feedContainer.querySelector('.root-post');
 
   const renderTemplateFeed = (post) => {
-    if(!auth.currentUser)return
+    if (!auth.currentUser) return;
     rootFeed.innerHTML = '';
     let postList = '';
     post.forEach(async (doc) => {
@@ -99,16 +100,19 @@ const feed = async () => {
       if (docData.UsersWhoLiked.includes(auth.currentUser.uid)) {
         likeHtml = `<i class="fa fa-heart like" id=${docId}></i>`;
       }
-      // console.log(docId);
-      // console.log(docData);
+      console.log(docId);
+      console.log(docData);
       postList += ` 
       <div class="interaction-posted">
         <div class="posted-header">
           <img class="user-photo" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="user-photo">
           <p class="user-name"> ${docData.nick}  </p>
           <p></p>
-          <i class="fa fa-trash" id=${docId} ></i>
-          <i class="fas fa-edit" id=${docId} ></i>
+          ${
+            docData.user === auth.currentUser.uid
+              ? `<i class="fa fa-trash" id=${docId} ></i> <i class="fas fa-edit" id=${docId} ></i>`
+              : ''
+          }
         </div>
         <p class="post-date" >${docData.date.toDate().toLocaleString()}</p> 
         <textarea  id="text-${docId}"  class="posted-text" disabled="true"> ${
@@ -126,7 +130,8 @@ const feed = async () => {
     rootFeed.innerHTML = postList;
     const btnsEdit = feedContainer.querySelectorAll('.fa-edit');
 
- btnsEdit.forEach((btn) => {
+    btnsEdit.forEach((btn) => {
+      // console.log(docData);
       btn.addEventListener('click', () => {
         btn.classList.add('btnEditActive');
         let textArea = feedContainer.querySelector(`#text-${btn.id}`);
@@ -142,7 +147,6 @@ const feed = async () => {
           btn.classList.remove('btnEditActive');
           btnCancelEdit.classList.remove('visible');
           btnConfirmEdit.classList.remove('visible');
-          
         });
 
         btnConfirmEdit.addEventListener('click', async () => {
@@ -177,7 +181,6 @@ const feed = async () => {
         }
       });
     });
-  
   };
 
   readPost(renderTemplateFeed);

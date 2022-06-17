@@ -451,6 +451,10 @@ height: 45vh;
 .review{
   margin-top: 2%;
 }
+
+.user-details{
+  outline: 2px solid red;
+}
 /* -------------------- MEDIA-----------------------------------------*/
 
 
@@ -564,6 +568,7 @@ height: 45vh;
   .link-logo{
     width: 4%;
   }
+  
 }
 
 

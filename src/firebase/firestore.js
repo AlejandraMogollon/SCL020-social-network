@@ -15,9 +15,9 @@ import {
   limit,
   arrayRemove,
   arrayUnion,
-} from "https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js";
+} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
 
-import { db } from "../firebase/init.js";
+import { db } from '../firebase/init.js';
 
 //parametros de lo q queremos guardar (ej "ada")
 export const createData = async (
@@ -29,7 +29,7 @@ export const createData = async (
   try {
     let postId = Math.random().toString(16).slice(2);
 
-    const docRef = await addDoc(collection(db, "post"), {
+    const docRef = await addDoc(collection(db, 'post'), {
       post: textPost2,
       date: Timestamp.now(),
       user: currentUser,
@@ -42,7 +42,7 @@ export const createData = async (
     // ;
     return docRef.id;
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error('Error adding document: ', e);
   }
 };
 
@@ -51,15 +51,15 @@ export const createData = async (
 //ahora a feed
 export const getUserData = async (userUid) => {
   const querySelector = await query(
-    collection(db, "user"),
-    where("id", "==", userUid)
+    collection(db, 'user'),
+    where('id', '==', userUid)
   );
   const userFirebase = await getDocs(querySelector);
   return userFirebase.docs[0].data();
 };
 
 export const getPost = async () => {
-  const querySnapshot = await getDocs(collection(db, "post"));
+  const querySnapshot = await getDocs(collection(db, 'post'));
   let postArr = [];
   querySnapshot.forEach((doc) => {
     const docuData = doc.data();
@@ -71,7 +71,7 @@ export const getPost = async () => {
 };
 
 export const getPostById = async (postId) => {
-  const docRef = doc(db, "post", postId);
+  const docRef = doc(db, 'post', postId);
   const docPost = await getDoc(docRef);
   if (docPost.exists()) {
     // console.log('Document data:', docPost.data());
@@ -81,19 +81,19 @@ export const getPostById = async (postId) => {
     };
   } else {
     // doc.data() will be undefined in this case
-    console.log("No such document!");
+    console.log('No such document!');
   }
 };
 
 export const deletePost = async (id) => {
-  await deleteDoc(doc(db, "post", id));
-  console.log("entre");
+  await deleteDoc(doc(db, 'post', id));
+  console.log('entre');
 };
 
 //VALIDAR QUE TEXTO POST NO ESTE VACIO
 
 export const readPost = async (callback) => {
-  onSnapshot(query(collection(db, "post"), orderBy("date", "desc")), (doc) => {
+  onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (doc) => {
     let array = [];
     doc.docs.forEach((post) => {
       array.push({ id: post.id, data: post.data() });
@@ -103,15 +103,15 @@ export const readPost = async (callback) => {
 };
 
 export const editPost = async (id, editPost) => {
-  await updateDoc(doc(db, "post", id), { post: editPost });
+  await updateDoc(doc(db, 'post', id), { post: editPost });
   console.log(editPost);
 };
 
 export const likeStatus = async (postId, userUid) => {
-  postId = postId.replace("like-", "");
+  postId = postId.replace('like-', '');
   const postInfo = await getPostById(postId);
   const arrUserLiked = postInfo.postData.UsersWhoLiked;
-  console.log("Arrr", arrUserLiked);
+  console.log('Arrr', arrUserLiked);
   let likeCount = postInfo.postData.LikeCount;
   if (arrUserLiked.includes(userUid)) {
     // arrUserLiked: arrayRemove(userUid);
@@ -133,19 +133,19 @@ export const likeStatus = async (postId, userUid) => {
 //PRUEBA PARA FILTRAR POST USUARIO ACTUAL
 export const readProfilePost = async (callback) => {
   console.log(db);
-  onSnapshot(query(collection(db, "post"), orderBy("date", "desc")), (doc) => {
+  onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (doc) => {
     let array = [];
     console.log(array);
     doc.docs.forEach((post) => {
       array.push({ id: post.id, data: post.data() });
     });
     callback(array);
-    console.log("cca");
+    console.log('cca');
   });
 };
 
 export const readPost2 = async (callback) => {
-  onSnapshot(query(collection(db, "post"), orderBy("date", "desc")), (doc) => {
+  onSnapshot(query(collection(db, 'post'), orderBy('date', 'desc')), (doc) => {
     let array = [];
     doc.docs.forEach((post) => {
       array.push({ id: post.id, data: post.data() });
