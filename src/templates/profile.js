@@ -1,14 +1,13 @@
-import { readPost, getUserData } from '../firebase/firestore.js';
+import { readPost, getUserData,editPost } from '../firebase/firestore.js';
 import { onNavigate } from '../router/router.js';
 import { auth } from '../firebase/init.js';
 import { logOut } from '../firebase/auth.js';
-import { findMovies, getMovies, printMovies, loadMovies } from '../utility.js';
+import { findMovies} from '../utility.js';
 const profile = async () => {
   const templateUser = ` 
   <header>
     <nav>
       <img class="logo-mediary-nav"src="img/logo-Mediary.png" alt="">
-      <button class="btn-feed"> Go back to Feed </button>
     </nav>
   </header>
   <section  class="profile-section">
@@ -17,7 +16,7 @@ const profile = async () => {
         <div class= "container-input-search">
           <h3>Search Movie:</h3>
           <input type = "text" class = "input-search" placeholder="Search Movie Title ..." id = "movie-search-box"  >
-          <img class="btnSearch" src="img/search-icon.png" alt=""/>
+          <div><img class="btnSearch" src="img/search-icon.png" alt=""/></div>
         </div>
       </div> 
       <div class="root-post-profile" id="rootProfile"> </div>
@@ -45,13 +44,15 @@ Log out</button>
   const renderTemplateProfile = (post) => {
     rootProfile.innerHTML = '';
     let postList = '';
-    let nickName; //crear variable donde si podemos conseguir los datos
+    let nickName;
+    let email; //crear variable donde si podemos conseguir los datos
     post.forEach(async (doc) => {
       let docData = doc.data;
       let docId = doc.id;
       if (auth.currentUser.uid === docData.user) {
-        nickName = docData.nick; // conseguir los datos del nick
-
+        nickName = docData.nick;// conseguir los datos del nick
+        email = docData.mail; 
+        // console.log(docData)
         postList += ` 
         <div class="interaction-posted">
           <div class="posted-header">
@@ -73,44 +74,73 @@ Log out</button>
               </div>
             </div>`;
       }
-      // console.log(auth.currentUser.uid);
     });
     rootProfile.innerHTML = postList;
+    
     //fuera del foreach colocarle el innerHTML de lo que vamos a cambiar, agregandole el nickname
     asideProfile.innerHTML = `<h1>Profile Information</h1>
     <div class="photo-profile">
-      <img class="user-img-post-profile" src="https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg" alt="">
+      <img class="user-img-post-profile" src="img/user-photo.png" alt="">
     </div>  
-    <h1 class="user-data-name">${nickName}</h1>
-    <button class="btn-log-out">            <i class="fa-solid fa-right-from-bracket"></i>
-Log out</button>`;
+    <h2 class="user-data-name">${nickName.charAt(0).toUpperCase()+nickName.slice(1,nickName.length)}</h2>
+    <div class="line-profile"></div>
+    <h3 class="user-data-name">${email}</h3>
+    
+    <button class="btn-log-out"><i class="fa-solid fa-right-from-bracket"></i>Log out</button>
+    <button class="btn-feed"> Go back to Feed </button>`;
+const btnsEdit = userContainer.querySelectorAll('.fa-edit');
 
+    btnsEdit.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.classList.add('btnEditActive');
+        let textArea = userContainer.querySelector(`#text-${btn.id}`);
+        let btnConfirmEdit = userContainer.querySelector(`#confirm-${btn.id}`);
+        let btnCancelEdit = userContainer.querySelector(`#cancel-${btn.id}`);
+        textArea.disabled = false;
+        textArea.style.border = '2px solid white';
+        btnCancelEdit.classList.add('visible');
+        btnConfirmEdit.classList.add('visible');
+        btnCancelEdit.addEventListener('click', () => {
+          textArea.disabled = true;
+          textArea.style.border = 'none';
+          btn.classList.remove('btnEditActive');
+          btnCancelEdit.classList.remove('visible');
+          btnConfirmEdit.classList.remove('visible');
+        });
+
+        btnConfirmEdit.addEventListener('click', async () => {
+          await editPost(btn.id, textArea.value);
+          console.log(btnConfirmEdit.id.length);
+          console.log('confirm edit clicked');
+        });
+      });
+    });
+    
     const btnLogOut = userContainer.querySelector('.btn-log-out'); //funcion boton debajo para que funcionara
     btnLogOut.addEventListener('click', () => {
       logOut(auth);
       onNavigate('/');
     });
+    const btnFeed = userContainer.querySelector('.btn-feed');
+    btnFeed.addEventListener('click', () => {
+    onNavigate('/feed');
+    });
   };
-  // console.log(auth.currentUser.uid);
+ 
   readPost(renderTemplateProfile);
 
-  // const btnLogOut = userContainer.querySelector('.btn-log-out');
-  // btnLogOut.addEventListener('click', () => {
-  //   logOut(auth);
-  //   onNavigate('/');
-  // });
-  const btnFeed = userContainer.querySelector('.btn-feed');
-  btnFeed.addEventListener('click', () => {
-    onNavigate('/feed');
-  });
+
+
 
   //----------------- search ---------------------//
 
   const inputSearch = userContainer.querySelector('.input-search');
   const rootSearch = userContainer.querySelector('div-search');
-  inputSearch.addEventListener('click', () => {
+  inputSearch.addEventListener('keyup', () => {
     findMovies(inputSearch);
   });
+
+
 
   return userContainer;
 };

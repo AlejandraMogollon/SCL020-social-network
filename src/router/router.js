@@ -2,8 +2,9 @@ import login from '../templates/login.js';
 import feed from '../templates/feed.js';
 import signUp from '../templates/signup.js';
 import profile from '../templates/profile.js';
-import search from '../templates/search.js';
+
 import { auth } from '../firebase/init.js';
+import search from '../templates/search.js';
 
 const routes = {
   // path: '/'
@@ -12,7 +13,8 @@ const routes = {
   '/feed': await feed(),
   '/signup': signUp(),
   '/profile': await profile(auth),
-  '/search': search(),
+  '/search': await search(auth),
+  
 };
 
 const onNavigate = (pathname) => {

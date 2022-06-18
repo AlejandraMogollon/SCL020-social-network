@@ -8,11 +8,9 @@ import {
   where,
   doc,
   updateDoc,
-  deleteField,
   deleteDoc,
   onSnapshot,
   orderBy,
-  limit,
   arrayRemove,
   arrayUnion,
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';

@@ -70,20 +70,14 @@ const feed = async () => {
   const btnUser = feedContainer.querySelector('.btnUser');
   btnUser.addEventListener('click', () => {
     const userNameProfile = auth.currentUser.uid;
-    console.log('dentro de boton', auth.currentUser.uid);
+    // console.log('dentro de boton', auth.currentUser.uid);
     onNavigate('/profile');
   });
   const btnSearch = feedContainer.querySelector('#btnSearch');
   btnSearch.addEventListener('click', () => {
-    console.log('btn search');
+    // console.log('btn search');
     onNavigate('/search');
   });
-  //BOTON LOGOUT - ONCLICK => SYNC - SIGNOUT (FIREBASE) -> ONNAVIGATE(LOGIN)
-  // const btnLogOut = feedContainer.querySelector(".btnLogOut");
-  // btnLogOut.addEventListener("click", async () => {
-  //   await logOut(auth);
-  //   onNavigate("/");
-  // });
 
   //BOTON POST
   const btnPost = feedContainer.querySelector('.post-btn');
@@ -100,8 +94,8 @@ const feed = async () => {
       if (docData.UsersWhoLiked.includes(auth.currentUser.uid)) {
         likeHtml = `<i class="fa fa-heart like" id=${docId}></i>`;
       }
-      console.log(docId);
-      console.log(docData);
+      // console.log(docId);
+      // console.log(docData);
       postList += ` 
       <div class="interaction-posted">
         <div class="posted-header">
