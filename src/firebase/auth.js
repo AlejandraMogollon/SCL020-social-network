@@ -99,7 +99,7 @@ export const userLogIn = async (email, password) => {
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      console.log(user.name)
+      // console.log(user.name)
       
       // ...
       
@@ -159,7 +159,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 }
-console.log(auth)
+// console.log(auth)
 
 
 

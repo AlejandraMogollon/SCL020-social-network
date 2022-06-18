@@ -3,10 +3,8 @@ function findMovies(el){
     let searchTerm = (el.value).trim(); //
     if(searchTerm.length > 0){
         console.log(`searchTerm  ${searchTerm}`)
-        // searchList.classList.remove('hide-search-list');
         loadMovies(searchTerm);
     } else {
-        // searchList.classList.add('hide-search-list');
         console.log("no tiene nada la search")
     }
 }
@@ -27,69 +25,25 @@ busqueda.forEach((item)=> {
    })
    return printMovies(prueba)
 }
-
+let resultContainer = document.createElement('div');
 const printMovies = (arr)=>{
-    console.log(arr);
-    let resultContainer = document.createElement('div');
-    
+    let resultSearchList='';
+    resultContainer.innerHTML = ""
     resultContainer.className = "result-container";
-    arr.forEach((item)=>{console.log(item)
-    resultContainer.innerHTML = `
+    arr.forEach((item,i)=>{console.log(item)
+     resultSearchList+= `
     <div class="movie-container">
-    <img class="poster" src="${arr[0].Poster}">
-    <h1>${arr[0].Title}</h1>
-    <ul class="movie-details">
-    <li> Year: ${arr[0].Year}</li>
-    <li> Type: ${arr[0].Type}</li>
-    </ul>
-    </div>
-
-    <div class="movie-container">
-    <img class="poster" src="${arr[1].Poster}">
-    <h1>${arr[1].Title}</h1>
-    <ul class="movie-details">
-    <li>  ${arr[1].Year}</li>
-    <li>  ${arr[1].Type}</li>
-    </ul>
-    </div>
-
-    <div class="movie-container">
-    <img class="poster" src="${arr[2].Poster}">
-    <h1>${arr[2].Title}</h1>
-    <ul class="movie-details">
-    <li>  ${arr[2].Year}</li>
-    <li>  ${arr[2].Type}</li>
-    </ul>
-    </div>
-
-    <div class="movie-container">
-    <img class="poster" src="${arr[3].Poster}">
-    <h1>${arr[3].Title}</h1>
-    <ul class="movie-details">
-    <li>  ${arr[3].Year}</li>
-    <li>  ${arr[3].Type}</li>
-    </ul>
-    </div>
-
-    <div class="movie-container">
-    <img class="poster" src="${arr[4].Poster}">
-    <h1>${arr[4].Title}</h1>
-    <ul class="movie-details">
-    <li>  ${arr[4].Year}</li>
-    <li>  ${arr[4].Type}</li>
-    </ul>
-    </div>
-
-    <div class="movie-container">
-    <img class="poster" src="${arr[5].Poster}">
-    <h1>${arr[5].Title}</h1>
-    <ul class="movie-details">
-    <li>  ${arr[5].Year}</li>
-    <li>  ${arr[5].Type}</li>
-    </ul>
+        <img class="poster" src="${arr[i].Poster}">
+        <h1>${arr[i].Title}</h1>
+        <ul class="movie-details">
+            <li> Year: ${arr[i].Year}</li>
+            <li> Type: ${arr[i].Type}</li>
+        <a href="https://www.imdb.com/title/${arr[i].imdbID}/?ref_=hm_tpks_tt_i_1_pd_tp1_pbr" target="blank" ><img src=img/icon-imdb.png></a> 
+        </ul>
     </div>
     `
     })
+    resultContainer.innerHTML = resultSearchList
     console.log(resultContainer)
     
     const rootSearch = document.querySelector(".div-search")
@@ -99,10 +53,13 @@ const printMovies = (arr)=>{
 }
 
 
-export { findMovies, loadMovies, printMovies, getMovies };
+
+export { findMovies };
 
 
 
+
+                       
 
 //------LOGIN------//
 // - OK
@@ -113,17 +70,17 @@ export { findMovies, loadMovies, printMovies, getMovies };
 //------PROFILE------//
 // - Responsive 
 // - Diseño -> incorporar icono de logout, definir si post usuario tendrán funcionalidad sino borrar botones. 
-// - Mostrar información  de usuario
-// - Filtrar posts de usuario
-// - arreglar Render de búsqueda 
+// - OK => Mostrar información  de usuario
+// - OK => Filtrar posts de usuario
+// - OK => arreglar Render de búsqueda 
 // - textos contexto búsqueda (?) -> ej: "browse for movies to inspire your posts" "search and get movie info " 
 // - activar búsqueda con clic en el icono y no en input (sólo si hay tiempo)
 
 //------FEED-----// 
 // - Arreglo carrusel (imagenes se salen de contenedor)
-// - Botón reviews -> ubicar sobre o bajo las imagenes
+// - OK => Botón reviews -> ubicar sobre o bajo las imagenes
 // - Postear con Google (auth)
-// - hover delete 
+// - OK => hover delete 
 
 
 //------OTROS-----// 
@@ -136,7 +93,7 @@ export { findMovies, loadMovies, printMovies, getMovies };
 // - Revisión y limpieza JS 
 
 // VARIOS - DEFINIR
-// - restringir borrar y editar sólo el currentUser 
+// - OK => restringir borrar y editar sólo el currentUser 
 // - PhotoURL --> SOLO EN CASO DE TENER TEST LISTOS 
 // - Comentarios -> DESCARTADO 
 
