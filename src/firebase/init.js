@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js';
 import {
   GoogleAuthProvider,
@@ -11,4 +12,6 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider(app);
 const db = getFirestore(app);
 
-export { app, auth, provider, db };
+export {
+  app, auth, provider, db,
+};
