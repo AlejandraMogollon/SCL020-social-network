@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { onNavigate } from '../router/router.js';
 import { auth } from '../firebase/init.js';
 import { googleLog, redirectResult, userLogIn } from '../firebase/auth.js';

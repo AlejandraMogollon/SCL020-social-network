@@ -1,4 +1,3 @@
-/* eslint-disable */
-import { onNavigate } from '../router/router.js';
+import { onNavigate } from './router/router.js';
 
 onNavigate(window.location.pathname);

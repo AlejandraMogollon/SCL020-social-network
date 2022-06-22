@@ -171,7 +171,7 @@ const feed = async () => {
       subRoot.className = 'interaction-posted';
       textPost.value = '';
     } else {
-      alert('You need a message');// eslint-disable-line no-alert
+      alert('You need a message');
     }
 
     const btnComment = feedContainer.querySelectorAll('.comment-icon');
