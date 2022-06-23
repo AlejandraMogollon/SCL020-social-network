@@ -26,6 +26,7 @@ import {
   query,
   updateDoc,
   where,
+  
 } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
 import config from './config.js';
 
@@ -61,4 +62,5 @@ export {
   query,
   updateDoc,
   where,
+  
 };
