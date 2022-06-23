@@ -60,7 +60,7 @@ Log out</button>
         postList += ` 
         <div class='interaction-posted'>
           <div class='posted-header'>
-            <img class='user-photo' src='https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg' alt='user-photo'>
+            <img class='user-photo' src='img/user-black.png' alt='user-photo'>
             <p class='user-name'> ${docData.nick}  </p>
             <i class='fa fa-trash' id=${docId} ></i>
             <i class='far fa-edit' id=${docId} ></i>

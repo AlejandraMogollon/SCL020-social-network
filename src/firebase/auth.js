@@ -1,18 +1,3 @@
-/* eslint-disable */
-// import {
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   GoogleAuthProvider,
-//   getRedirectResult,
-//   signOut,
-//   onAuthStateChanged,
-//   signInWithPopup,
-// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
-// import {
-//   collection,
-//   addDoc,
-//   Timestamp,
-// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
 import { auth, provider, db, createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -97,16 +82,36 @@ export const userLogIn = async (email, password) => {
     throw error;
   }
 };
+// export const googleLog = async () => {
+//   await signInWithPopup(auth, provider)
+//     .then((result) => {
+//       // This gives you a Google Access Token. You can use it to access the Google API.
+//       const credential = GoogleAuthProvider.credentialFromResult(result);
+//       const token = credential.accessToken;
+//       // The signed-in user info.
+//       const user = result.user;
+//       // console.log(user.name)
+//     }).catch(() => {
+//       // Handle Errors here.
+//       // const errorCode = error.code;
+//       // const errorMessage = error.message;
+//       // The email of the user's account used.
+//       // const email = error.customData.email;
+//       // The AuthCredential type that was used.
+//       // const credential = GoogleAuthProvider.credentialFromError(error);
+//     });
+// };
 export const googleLog = async () => {
+  try{
   await signInWithPopup(auth, provider)
-    .then((result) => {
+    
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
       // console.log(user.name)
-    }).catch(() => {
+    } catch (error)  {
       // Handle Errors here.
       // const errorCode = error.code;
       // const errorMessage = error.message;
@@ -114,8 +119,8 @@ export const googleLog = async () => {
       // const email = error.customData.email;
       // The AuthCredential type that was used.
       // const credential = GoogleAuthProvider.credentialFromError(error);
-    });
-};
+    }
+  }
 export const redirectResult = async (auth) => {
   await getRedirectResult(auth)
     .then((result) => {
@@ -146,12 +151,20 @@ export const listAuth = () => {
   });
 };
 
+// export const logOut = async (auth) => {
+//   signOut(auth)
+//     .then(() => {
+//       onNavigate('/');
+//     })
+//     .catch(() => {
+//       // error
+//     });
+
+// prueba --- borrar dp
 export const logOut = async (auth) => {
-  signOut(auth)
-    .then(() => {
-      onNavigate('/');
-    })
-    .catch(() => {
+  try{ 
+    await signOut(auth);
+  } catch (error)  {
       // error
-    });
+    };
 };

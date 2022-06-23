@@ -34,7 +34,7 @@ const feed = async () => {
     <main class='feed'>
       <div class='post'>
         <div class='img-text-area'>
-          <img class='user-img-post' src='https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg' alt=''>
+          <img class='user-img-post' src='img/user-black.png' alt=''>
           <textarea class='text-post' rows='4' cols='150' placeholder="What's Happening" ></textarea>
         </div>
         <div class='icons-post-btn'>
@@ -91,7 +91,7 @@ const feed = async () => {
       postList += ` 
       <div class='interaction-posted'>
         <div class='posted-header'>
-          <img class='user-photo' src='https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg' alt='user-photo'>
+          <img class='user-photo' src='img/user-black.png' alt='user-photo'>
           <p class='user-name'> ${docData.nick}  </p>
           <p></p>
           ${
