@@ -35,7 +35,7 @@ const feed = async () => {
       <div class='post'>
         <div class='img-text-area'>
           <img class='user-img-post' src='https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg' alt=''>
-          <textarea class='text-post' rows='4' cols='150' placeholder='What's Happening' ></textarea>
+          <textarea class='text-post' rows='4' cols='150' placeholder="What's Happening" ></textarea>
         </div>
         <div class='icons-post-btn'>
           <img class='post-icon-image' src='img/post-icon-image.png' alt=''>
@@ -94,10 +94,16 @@ const feed = async () => {
           <img class='user-photo' src='https://www.eaclinic.co.uk/wp-content/uploads/2019/01/woman-face-eyes-500x500.jpg' alt='user-photo'>
           <p class='user-name'> ${docData.nick}  </p>
           <p></p>
-          ${docData.user === auth.currentUser.uid ? `<i class='fa fa-trash' id=${docId} ></i> <i class='fas fa-edit' id=${docId} ></i>` : ''}
+          ${
+            docData.user === auth.currentUser.uid
+              ? `<i class='fa fa-trash' id=${docId} ></i> <i class='fas fa-edit' id=${docId} ></i>`
+              : ''
+          }
         </div>
         <p class='post-date' >${docData.date.toDate().toLocaleString()}</p> 
-        <textarea  id='text-${docId}'  class='posted-text' disabled='true'> ${docData.post} </textarea>
+        <textarea  id='text-${docId}'  class='posted-text' disabled='true'> ${
+        docData.post
+      } </textarea>
             <div class='icons-posted'>
             ${likeHtml}
               <p class='likes-count'>${docData.LikeCount}</p>
@@ -114,7 +120,9 @@ const feed = async () => {
       btn.addEventListener('click', () => {
         btn.classList.add('btnEditActive');
         const textArea = feedContainer.querySelector(`#text-${btn.id}`);
-        const btnConfirmEdit = feedContainer.querySelector(`#confirm-${btn.id}`);
+        const btnConfirmEdit = feedContainer.querySelector(
+          `#confirm-${btn.id}`
+        );
         const btnCancelEdit = feedContainer.querySelector(`#cancel-${btn.id}`);
         textArea.disabled = false;
         textArea.style.border = '2px solid white';
@@ -137,10 +145,7 @@ const feed = async () => {
     btnLike.forEach((buttonLike) => {
       buttonLike.addEventListener('click', async (e) => {
         const idPostLike = e.target.id;
-        await likeStatus(
-          idPostLike,
-          auth.currentUser.uid,
-        );
+        await likeStatus(idPostLike, auth.currentUser.uid);
       });
     });
     const btnDelete = feedContainer.querySelectorAll('.fa-trash');
@@ -165,7 +170,7 @@ const feed = async () => {
         userData.id,
         textPost.value,
         userData.mail,
-        userData.nick,
+        userData.nick
       );
       const subRoot = document.createElement('div');
       subRoot.className = 'interaction-posted';
@@ -176,8 +181,7 @@ const feed = async () => {
 
     const btnComment = feedContainer.querySelectorAll('.comment-icon');
     btnComment.forEach((btn) => {
-      btn.addEventListener('click', () => {
-      });
+      btn.addEventListener('click', () => {});
     });
   });
   return feedContainer;
