@@ -1,19 +1,27 @@
 /* eslint-disable */
-import {
-  createUserWithEmailAndPassword,
+// import {
+//   createUserWithEmailAndPassword,
+//   signInWithEmailAndPassword,
+//   GoogleAuthProvider,
+//   getRedirectResult,
+//   signOut,
+//   onAuthStateChanged,
+//   signInWithPopup,
+// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
+// import {
+//   collection,
+//   addDoc,
+//   Timestamp,
+// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
+import { auth, provider, db, createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   getRedirectResult,
   signOut,
   onAuthStateChanged,
-  signInWithPopup,
-} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js';
-import {
-  collection,
+  signInWithPopup, collection,
   addDoc,
-  Timestamp,
-} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
-import { auth, provider, db } from './init.js';
+  Timestamp,} from './init.js';
 import { onNavigate } from '../router/router.js';
 
 export const createUser = async (email, password, name) => {

@@ -1,6 +1,21 @@
 /* eslint-disable */
-import {
-  collection,
+// import {
+//   collection,
+//   addDoc,
+//   Timestamp,
+//   getDocs,
+//   getDoc,
+//   query,
+//   where,
+//   doc,
+//   updateDoc,
+//   deleteDoc,
+//   onSnapshot,
+//   orderBy,
+//   arrayRemove,
+//   arrayUnion,
+// } from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
+import { db, collection,
   addDoc,
   Timestamp,
   getDocs,
@@ -13,9 +28,7 @@ import {
   onSnapshot,
   orderBy,
   arrayRemove,
-  arrayUnion,
-} from 'https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js';
-import { db } from './init.js';
+  arrayUnion, } from './init.js';
 
 // parametros de lo q queremos guardar (ej 'ada')
 export const createData = async (
