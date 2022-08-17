@@ -8,21 +8,21 @@
 
 ## 2 - Despliegue:
 
-![Login](./img/mediaryLOG.png)
+![Login](https://i.ibb.co/FDkXQj1/mediary-LOG.png)
 
-![Sign](./img/mediarySIGN.png)
+![Sign](https://i.ibb.co/sFVbZv5/mediary-SIGN.png)
 
-![Feed](./img/mediaryFEED.png)
+![Feed](https://i.ibb.co/4SZ6bGg/mediary-FEED.png)
 
-![Profile](./img/mediaryPROFILE.png)
+![Profile](https://i.ibb.co/L6xdwvd/mediary-PROFILE.png)
 
-![Login-Resp](./img/mediaryLOG-RESP.png)
+![Login-Resp](https://i.ibb.co/PwVbZSS/mediary-LOG-RESP.png)
 
-![Sign-Resp](./img/mediarySIGN-RESP.png)
+![Sign-Resp](https://i.ibb.co/gjfnRC0/mediary-SIGN-RESP.png)
 
-![Feed-Resp](./img/mediaryFEED-RESP.png)
+![Feed-Resp](https://i.ibb.co/bH5mvD3/mediary-FEED-RESP.png)
 
-![Profile-Resp](./img/mediaryPROFILE-RESP.png)
+![Profile-Resp](https://i.ibb.co/0m6x0rT/mediary-PROFILE-RESP.png)
 
 ---
 
@@ -102,14 +102,14 @@ Mediary es una Red Social donde puedes Registrarte, y compartir tus opiniones so
 
 Empezamos a prototipar en Mobile First, para tener asegurado el responsive en esta vista.
 
-![Mobile First](./img/prototipo1.png)
+![Mobile First](https://i.ibb.co/4VZxpKp/prototipo1.png)
 
 ##### Prototipos de alta fidelidad
 
 En esta etapa, pudimos definir una paleta de colores que reflejase la identidad de la Red Social y que le diera coherencia con la imagen corporativa.
 
-![Colores](./img/colores.png)
+![Colores](https://i.ibb.co/9bvcQ0q/colores.png)
 
-![Prototipo](./img/prototipo-figma.png)
+![Prototipo](https://i.ibb.co/JjxVCrr/Prototipo-figma.png)
 
 ---
